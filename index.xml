@@ -16,5 +16,14 @@
       <description>I heard you wanted a practical distributed systems, so here it is writing hello world of distributed systems - a distributed counter. For a little of background, let&amp;rsquo;s just say you are trying to write a likes service which tracks likes for a particular post and you want to horizontally scale this service by adding multiple instances of this service due to whatever reasons. So, let&amp;rsquo;s just talk about the ways to achieve this.</description>
     </item>
     
+    <item>
+      <title>About</title>
+      <link>https://vishal1132.github.io/about/</link>
+      <pubDate>Thu, 28 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://vishal1132.github.io/about/</guid>
+      <description>Vishal Sharma(he/him/they) is a software developer from India. He started his software developer journey professionally in 2020. He works majorly on backend writing softwares/services that can scale and are inherently distributed. He writes mostly is mostly in go.</description>
+    </item>
+    
   </channel>
 </rss>

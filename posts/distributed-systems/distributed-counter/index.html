@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"
+<!doctype html><html lang="en" data-palette="blue"
   >
   <head>
     <meta charset="utf-8">
@@ -8,11 +8,11 @@
 <link rel="icon" href="https://vishal1132.github.io/images/icons/icon-16x16.png" sizes="16x16" type="image/png">
 <link rel="icon" href="https://vishal1132.github.io/images/icons/favicon.ico">
 <link rel="manifest" href="https://vishal1132.github.io/manifest.json">
-<meta name="keywords" content="Markdown" />
+<meta name="keywords" content="Distributed Systems, CRDTs, G-Set CRDT, Go" />
 <meta name="description" content="Write a distributed counter in go" /><meta itemprop="name" content="Distributed Counter">
 <meta itemprop="description" content="Write a distributed counter in go"><meta itemprop="datePublished" content="2021-09-01T11:36:50+08:00" />
 <meta itemprop="dateModified" content="2021-09-01T11:36:50+08:00" />
-<meta itemprop="wordCount" content="1658">
+<meta itemprop="wordCount" content="1705">
 <meta itemprop="keywords" content="" /><meta property="og:title" content="Distributed Counter" />
 <meta property="og:description" content="Write a distributed counter in go" />
 <meta property="og:type" content="article" />
@@ -23,14 +23,15 @@
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Distributed Counter"/>
 <meta name="twitter:description" content="Write a distributed counter in go"/>
+<meta name="twitter:site" content="@vishalssh"/>
 <link rel="stylesheet" href="https://vishal1132.github.io/css/main.min.b7a6eda8d46e39a549f182cf72a9ff4f4c1d4d82c31ecc3ede0b7f4d5b26f32b.css" integrity="sha256-t6btqNRuOaVJ8YLPcqn/T0wdTYLDHsw&#43;3gt/TVsm8ys=" crossorigin="anonymous"><link rel="stylesheet" href="https://vishal1132.github.io/css/viewer.min.3d228794bcedbbfa0412beb8fbc1ec6973202945e42af7004f742a4d7bd620ab.css" integrity="sha256-PSKHlLztu/oEEr64&#43;8HsaXMgKUXkKvcAT3QqTXvWIKs=" crossorigin="anonymous"></head>
   <body><script>const items=['mode','palette'];items.forEach(function(a){const b=localStorage.getItem('hbs-'+a);b&&document.body.parentElement.setAttribute('data-'+a,b)})</script><header><nav class="navbar top-app-bar top-app-bar-expand-lg fixed-top">
   <div class="container">
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <i class="fas fa-bars"></i>
-    </button><a class="navbar-brand flex-grow-1 flex-lg-grow-0 text-center text-lg-start mx-auto me-lg-3" href="https://vishal1132.github.io/"><img class="logo" alt="Logo" src="" loading="lazy"
-  
+    </button><a class="navbar-brand flex-grow-1 flex-lg-grow-0 text-center text-lg-start mx-auto me-lg-3" href="https://vishal1132.github.io/"><img class="logo" alt="Logo" src="https://vishal1132.github.io/images/logo.webp" loading="lazy"
+   width="500" height="500"
    />
 Dev With vishal
     </a>
@@ -75,6 +76,17 @@ Dev With vishal
       <div class="form-check form-switch">
         <input class="form-check-input" type="checkbox" id="modeSwitcher">
       </div>
+    </div>
+  </form>
+</section>
+
+<section class="setting">
+  <form class="font-size-switcher-form row">
+    <div class="col-auto">
+      <label for="fontSize" class="form-label"><i class="fas fa-fw fa-font"></i> Font Size</label>
+    </div>
+    <div class="col-auto ms-auto">
+      <input type="range" class="form-range" min="-2" max="2" id="fontSize">
     </div>
   </form>
 </section>
@@ -187,7 +199,7 @@ Dev With vishal
   <span class="post-date" title="created on 2021-09-01 09:06:50 &#43;0530 IST.">
     Sep 1, 2021
   </span><span class="post-reading-time">
-    8 min read
+    9 min read
   </span><span class="post-taxonomies"></span>
 </div>
 <div class="post-content mb-3"><p>I heard you wanted a practical distributed systems, so here it is writing hello world of distributed systems - a distributed counter. For a little of background, let&rsquo;s just say you are trying to write a likes service which tracks likes for a particular post and you want to horizontally scale this service by adding multiple instances of this service due to whatever reasons. So, let&rsquo;s just talk about the ways to achieve this.</p>
@@ -252,87 +264,87 @@ Dev With vishal
  library for logging. We need someway to make a cluster of nodes for which we are going to use <a href="https://github.com/hashicorp/memberlist" target="_blank" rel="noopener noreferrer">memberlist</a>
  from hashicorp which is a <em>hightly available</em> cluster aware membership protocol and going to gossip the likes with each other and preiodically reduce the entropy among the nodes.<!-- raw HTML omitted --></p>
 <p>To subscribe to the gossip layer of the memberlist protocol you have to implement <code>membership.Delegate</code> interface. The <code>NotifyMsg(b []byte)</code> method of the interface is going to notify you of any incoming gossip message. On invoke of this method we send it in a channel for which a state machine is looping indefinitely until the channel is closed and then taking necessary actions as approrpiate on receive of a gossip message. The relevant code is-</p>
-<pre tabindex="0"><code>func (s *server) NotifyMsg(b []byte) {
-    s.chanMsg &lt;- b
-}
-</code></pre><p>and looping on this channel to listen for events-</p>
-<pre tabindex="0"><code>func (s *server) loopSM() {
-    for i := range s.chanMsg {
-        s.logger.Debug().Msgf(&quot;Received message %s&quot;, string(i))
-        var l likeDomain
-        err := json.Unmarshal(i, &amp;l)
-        if err != nil {
-            s.logger.Debug().Msgf(&quot;Error unmarshalling message %e&quot;, err)
-            continue
-        }
-        // if error is not nil add that to gset.
-        _ = s.postLikes.AddLike(l.User, l.Post)
-    }
-}
-</code></pre><p>Also to reduce the entropy periodically we need to tell some local state of the node in some way which we achieve by</p>
-<pre tabindex="0"><code>s.mu.Lock()
-defer s.mu.Unlock()
-b, _ := json.Marshal(s.postLikes)
-return b
-</code></pre><p>and then compare remote state received from some node&rsquo;s global state.</p>
-<pre tabindex="0"><code>func (s *server) MergeRemoteState(buf []byte, join bool) {
-    if len(buf) == 0 || !join {
-        return
-    }
-    var temp = map[string]gset.Gset{}
-    _ = json.Unmarshal(buf, &amp;temp) // deliberately ignore error so linter doesn't complain.
-    // converge this temp into s.postLikes
-    s.mu.Lock()
-    defer s.mu.Unlock()
-    for key, value := range temp {
-        for _, user := range value.GetSet() {
-            _ = s.postLikes.AddLike(key, user)
-        }
-    }
-}
-</code></pre><p>Also we want to be notified when some node joins, leaves or update the cluster which we subscribe by implementing the <code>membership.EventDelegate</code> interface. The implementation of the interface looks like-</p>
-<pre tabindex="0"><code>func (s *server) NotifyJoin(n *memberlist.Node) {
-    s.logger.Info().Msgf(&quot;node joined: %s  address: %s \n&quot;, n.String(), n.Addr.String())
-}
-
-func (s *server) NotifyLeave(n *memberlist.Node) {
-    s.logger.Info().Msgf(&quot;node left: %s \n&quot;, n.String())
-}
-
-func (s *server) NotifyUpdate(n *memberlist.Node) {
-    s.logger.Info().Msgf(&quot;node updated: %s \n&quot;, n.String())
-}
-</code></pre><p>Also we need to broadcast the likes we get on a particular node to all the nodes for which we use gossip protocol of the membership layer by implementing the <code>membership.Broadcast</code> interface. The gossip protocol works exctly like how gossip works in general. You tell your friends something they tell something to their friends and so on the chain goes on and eventually the gossip is spread out to a whole lot of people. Similarly you get an event you gossip it to some nodes, which gossip it to some nodes again and so on, and so the event reaches every node eventually. So, on receiving the post request for like we emit an event in broadcast queue to be broadcasted to the cluster.<!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln">1</span>func (s *server) NotifyMsg(b []byte) {
+<span class="ln">2</span>    s.chanMsg &lt;- b
+<span class="ln">3</span>}
+</code></pre></div><p>and looping on this channel to listen for events-</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln"> 1</span>func (s *server) loopSM() {
+<span class="ln"> 2</span>    for i := range s.chanMsg {
+<span class="ln"> 3</span>        s.logger.Debug().Msgf(&#34;Received message %s&#34;, string(i))
+<span class="ln"> 4</span>        var l likeDomain
+<span class="ln"> 5</span>        err := json.Unmarshal(i, &amp;l)
+<span class="ln"> 6</span>        if err != nil {
+<span class="ln"> 7</span>            s.logger.Debug().Msgf(&#34;Error unmarshalling message %e&#34;, err)
+<span class="ln"> 8</span>            continue
+<span class="ln"> 9</span>        }
+<span class="ln">10</span>        // if error is not nil add that to gset.
+<span class="ln">11</span>        _ = s.postLikes.AddLike(l.User, l.Post)
+<span class="ln">12</span>    }
+<span class="ln">13</span>}
+</code></pre></div><p>Also to reduce the entropy periodically we need to tell some local state of the node in some way which we achieve by</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln">1</span>s.mu.Lock()
+<span class="ln">2</span>defer s.mu.Unlock()
+<span class="ln">3</span>b, _ := json.Marshal(s.postLikes)
+<span class="ln">4</span>return b
+</code></pre></div><p>and then compare remote state received from some node&rsquo;s global state.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln"> 1</span>func (s *server) MergeRemoteState(buf []byte, join bool) {
+<span class="ln"> 2</span>    if len(buf) == 0 || !join {
+<span class="ln"> 3</span>        return
+<span class="ln"> 4</span>    }
+<span class="ln"> 5</span>    var temp = map[string]gset.Gset{}
+<span class="ln"> 6</span>    _ = json.Unmarshal(buf, &amp;temp) // deliberately ignore error so linter doesn&#39;t complain.
+<span class="ln"> 7</span>    // converge this temp into s.postLikes
+<span class="ln"> 8</span>    s.mu.Lock()
+<span class="ln"> 9</span>    defer s.mu.Unlock()
+<span class="ln">10</span>    for key, value := range temp {
+<span class="ln">11</span>        for _, user := range value.GetSet() {
+<span class="ln">12</span>            _ = s.postLikes.AddLike(key, user)
+<span class="ln">13</span>        }
+<span class="ln">14</span>    }
+<span class="ln">15</span>}
+</code></pre></div><p>Also we want to be notified when some node joins, leaves or update the cluster which we subscribe by implementing the <code>membership.EventDelegate</code> interface. The implementation of the interface looks like-</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln"> 1</span>func (s *server) NotifyJoin(n *memberlist.Node) {
+<span class="ln"> 2</span>    s.logger.Info().Msgf(&#34;node joined: %s  address: %s \n&#34;, n.String(), n.Addr.String())
+<span class="ln"> 3</span>}
+<span class="ln"> 4</span>
+<span class="ln"> 5</span>func (s *server) NotifyLeave(n *memberlist.Node) {
+<span class="ln"> 6</span>    s.logger.Info().Msgf(&#34;node left: %s \n&#34;, n.String())
+<span class="ln"> 7</span>}
+<span class="ln"> 8</span>
+<span class="ln"> 9</span>func (s *server) NotifyUpdate(n *memberlist.Node) {
+<span class="ln">10</span>    s.logger.Info().Msgf(&#34;node updated: %s \n&#34;, n.String())
+<span class="ln">11</span>}
+</code></pre></div><p>Also we need to broadcast the likes we get on a particular node to all the nodes for which we use gossip protocol of the membership layer by implementing the <code>membership.Broadcast</code> interface. The gossip protocol works exctly like how gossip works in general. You tell your friends something they tell something to their friends and so on the chain goes on and eventually the gossip is spread out to a whole lot of people. Similarly you get an event you gossip it to some nodes, which gossip it to some nodes again and so on, and so the event reaches every node eventually. So, on receiving the post request for like we emit an event in broadcast queue to be broadcasted to the cluster.<!-- raw HTML omitted --></p>
 <p>And the get request gets the information from it&rsquo;s local in memory database, and therefore it might be possible the like recorded at a particular node might not have reached here until now, but that&rsquo;s alright we can be eventually consistent here. We can show the like after sometime, the important thing is that we don&rsquo;t lose the like. If you want stronger consistency for example- linearizability- you might want something like writing to a quorum of nodes at the time of writing a like and then getting it from the quorum of nodes again while reading the likes for a post. That&rsquo;s it, that&rsquo;s the distributed service/counter. Now we need some sort of orchestration to deploy these services we are going to be using kubernetes for that. Not pasting the entire <em>yamls</em> just pasting some relevant code.<!-- raw HTML omitted --></p>
 <p>The membership requires atleast one known node in the cluster to join the cluster. so we are going to create a <code>master deployment</code> with</p>
-<pre tabindex="0"><code>labels:
-        workertype: master
-        application: likes-distribute
-</code></pre><p>and a master deployment service to be able to connect with the pods described by master deployment.</p>
-<pre tabindex="0"><code>spec:
-  selector:
-    workertype: master
-    application: likes-distributed
-</code></pre><p>This can be a clusterip service because only the worker nodes that we are going to create just right after, are going to connect to master via this service. The worker nodes are not actually workers and the request can land up on any of the nodes/pods but the membership requires atleast one known member of the cluster to join the cluster.</p>
-<pre tabindex="0"><code>metadata:
-  labels:
-        workertype: worker
-        application: likes-distributed
-</code></pre><p>Distinguishing from master so that every pod doesn&rsquo;t create it&rsquo;s own cluster, then that&rsquo;s just meaningless. Now we need some service to be able to connect to n workers and 1 master.</p>
-<pre tabindex="0"><code>spec:
-  selector:
-    application: likes-distributed
-  type: LoadBalancer
-  ports:
-  - port: 80
-    nodePort: 31001
-    protocol: TCP
-    targetPort: 8080
-    name: http-server
-</code></pre><p>You can check out the whole source code <a href="https://github.com/vishal1132/distributedcounter" target="_blank" rel="noopener noreferrer">here</a>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln">1</span>labels:
+<span class="ln">2</span>        workertype: master
+<span class="ln">3</span>        application: likes-distribute
+</code></pre></div><p>and a master deployment service to be able to connect with the pods described by master deployment.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln">1</span>spec:
+<span class="ln">2</span>  selector:
+<span class="ln">3</span>    workertype: master
+<span class="ln">4</span>    application: likes-distributed
+</code></pre></div><p>This can be a clusterip service because only the worker nodes that we are going to create just right after, are going to connect to master via this service. The worker nodes are not actually workers and the request can land up on any of the nodes/pods but the membership requires atleast one known member of the cluster to join the cluster.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln">1</span>metadata:
+<span class="ln">2</span>  labels:
+<span class="ln">3</span>        workertype: worker
+<span class="ln">4</span>        application: likes-distributed
+</code></pre></div><p>Distinguishing from master so that every pod doesn&rsquo;t create it&rsquo;s own cluster, then that&rsquo;s just meaningless. Now we need some service to be able to connect to n workers and 1 master.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln"> 1</span>spec:
+<span class="ln"> 2</span>  selector:
+<span class="ln"> 3</span>    application: likes-distributed
+<span class="ln"> 4</span>  type: LoadBalancer
+<span class="ln"> 5</span>  ports:
+<span class="ln"> 6</span>  - port: 80
+<span class="ln"> 7</span>    nodePort: 31001
+<span class="ln"> 8</span>    protocol: TCP
+<span class="ln"> 9</span>    targetPort: 8080
+<span class="ln">10</span>    name: http-server
+</code></pre></div><p>You can check out the whole source code <a href="https://github.com/vishal1132/distributedcounter" target="_blank" rel="noopener noreferrer">here</a>
 , if you like the repo don&rsquo;t forget to give it a start. You can use <code>make run</code> to run the kubernetes cluster on your local, if you have minikube installed. It uses configmaps as well so please apply in order if you are applying manually. Then use-</p>
-<pre tabindex="0"><code>minikube service distributed-likes-service-cluster
-</code></pre><p>This will give you the service endpoint which you can use to register likes or get likes etc. A sample request looks something like-</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln">1</span>minikube service distributed-likes-service-cluster
+</code></pre></div><p>This will give you the service endpoint which you can use to register likes or get likes etc. A sample request looks something like-</p>
 <p><img class="img-fluid" alt="example" src="https://i.ibb.co/jrDc5BW/Screenshot-2021-08-15-at-1-06-35-AM.png" loading="lazy"
   
    />
@@ -341,24 +353,55 @@ func (s *server) NotifyUpdate(n *memberlist.Node) {
 <p>So, as you can see the request landed on some worker pod but quickly got replicated to all the pods which can be seen in subsequent curl requests.<!-- raw HTML omitted --></p>
 <p>There&rsquo;s a lot of scope of improvement in this service which is going to be iterative and many more blogs might come up with the improvements. Thanks.</p>
 </div></div>
-  <div class="card-footer"></div>
+  <div class="card-footer"><div class="post-navs d-flex justify-content-evenly">
+  <div class="post-nav post-prev"><i class="fas fa-fw fa-chevron-left"></i>
+    <a href="https://vishal1132.github.io/about/">About
+</a>
+  </div></div></div>
 </article><div class="post-copyright mb-3 row card component" id="post-copyright">
     <div class="card-header">
         <h2 class="card-title">Copyright</h2>
     </div>
-    <div class="card-body">
+    <div class="card-body"><a class="d-flex align-items-center flex-column" target="_blank" rel="license noopener noreferrer" href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.en">
+  <span><i class="fab fa-fw fa-2x fa-creative-commons"></i><i class="fab fa-fw fa-2x fa-creative-commons-by"></i><i class="fab fa-fw fa-2x fa-creative-commons-nc"></i><i class="fab fa-fw fa-2x fa-creative-commons-nd"></i></span>
+  CC BY-NC-ND 4.0 
+</a>
+
 
     </div>
 </div><div class="card component row post-comments" id="post-comments">
   <div class="card-header">
     <h2 class="card-title">Comments</h2>
   </div>
-  <div class="card-body"></div>
+  <div class="card-body"><script src="https://utteranc.es/client.js"
+  repo="vishal1132/vishal1132.github.io"
+  issue-term="pathname"
+  label="comment"
+  theme="github-light"
+  crossorigin="anonymous"
+  async>
+</script></div>
 </div></div>
 </div><aside class="col-lg-4 sidebar d-flex">
   <div class="container d-flex flex-column">
     
-    <div class="post-toc row mb-4 card component" id="postTOC">
+    <section class="card row text-center profile component">
+  <div class="card-body">
+    <div class="col-12 d-flex align-items-center justify-content-center"><img class="profile-avatar rounded-circle" alt="Vishal Sharma" src="https://vishal1132.github.io/images/profile.webp" loading="lazy"
+   width="425" height="359"
+   />
+</div>
+    <div class="col-12 profile-meta"><div class="profile-name">Vishal Sharma</div><div class="profile-bio">Computer Science Engineer</div><div class="profile-location"><i class="fas fa-fw fa-map-marker-alt"></i>New Delhi, India</div><div class="profile-about"><i class="fas fa-fw fa-user"></i><a href="https://vishal1132.github.io/about/">About</a></div><nav class="social-links nav justify-content-center"><a class="nav-link social-link" href="mailto:vishal.sharma09890@gmail.com" title="Email">
+      <i class="fas fa-fw fa-2x fa-envelope"></i>
+    </a><a class="nav-link social-link" target="_blank" href="https://github.com/vishal1132" title="GitHub" rel="noopener noreferrer">
+        <i class="fa-fw fa-2x fab fa-github"></i>
+      </a><a class="nav-link social-link" target="_blank" href="https://twitter.com/vishalssh" title="Twitter" rel="noopener noreferrer">
+        <i class="fa-fw fa-2x fab fa-twitter"></i>
+      </a></nav>
+</div>
+  </div>
+</section>
+  <div class="post-toc row mb-4 card component" id="postTOC">
   <div class="card-header">
     <h2 class="card-title">Contents</h2>
   </div>
@@ -398,12 +441,33 @@ func (s *server) NotifyUpdate(n *memberlist.Node) {
   </div>
 </aside>
 </div>
-    </main><footer class="footer mt-auto py-3 text-center container"><nav class="social-links nav justify-content-center mb-2"></nav>
+    </main><footer class="footer mt-auto py-3 text-center container"><nav class="social-links nav justify-content-center mb-2"><a class="nav-link social-link" href="mailto:vishal.sharma09890@gmail.com" title="Email">
+      <i class="fas fa-fw fa-2x fa-envelope"></i>
+    </a><a class="nav-link social-link" target="_blank" href="https://github.com/vishal1132" title="GitHub" rel="noopener noreferrer">
+        <i class="fa-fw fa-2x fab fa-github"></i>
+      </a><a class="nav-link social-link" target="_blank" href="https://linkedin.com/vishal-sharma-878661b1" title="LinkedIn" rel="noopener noreferrer">
+        <i class="fa-fw fa-2x fab fa-linkedin-in"></i>
+      </a><a class="nav-link social-link" target="_blank" href="https://stackoverflow.com/users/11974515" title="Stack Overflow" rel="noopener noreferrer">
+        <i class="fa-fw fa-2x fab fa-stack-overflow"></i>
+      </a><a class="nav-link social-link" target="_blank" href="https://twitter.com/vishalssh" title="Twitter" rel="noopener noreferrer">
+        <i class="fa-fw fa-2x fab fa-twitter"></i>
+      </a></nav>
+
 
 
 </footer>
-<script src="https://vishal1132.github.io/js/main.b4d13568ea62925adef3e45f80cad4c87607640396981d7e679fff6ab72a3dd4.js" integrity="sha256-tNE1aOpiklre8&#43;RfgMrUyHYHZAOWmB1&#43;Z5//arcqPdQ=" crossorigin="anonymous" defer></script><script src="https://vishal1132.github.io/js/icons.min.a35670f2f90c398e5ee5c8e509b428fae75aa2746854cee10b60794633076859.js" integrity="sha256-o1Zw8vkMOY5e5cjlCbQo&#43;udaonRoVM7hC2B5RjMHaFk=" crossorigin="anonymous" defer></script>
-<script src="https://vishal1132.github.io/js/viewer.min.4dba52a0a790f909408b7385316651299158381686401d50ff1f04dda6476473.js" integrity="sha256-TbpSoKeQ&#43;QlAi3OFMWZRKZFYOBaGQB1Q/x8E3aZHZHM=" crossorigin="anonymous" defer></script><script defer src="https://vishal1132.github.io/js/mermaid.min.f7f85f37aecd926c1536d7d7a068bda61384696972268ebd5624343dc57768e1.js" integrity="sha256-9/hfN67NkmwVNtfXoGi9phOEaWlyJo69ViQ0PcV3aOE=" crossorigin="anonymous"></script>
+<script src="https://vishal1132.github.io/js/main.a365cf8aadc379e3f52dd2b8d8b87c7bcd3185f783e8e71dd96dc67f52bf1e67.js" integrity="sha256-o2XPiq3DeeP1LdK42Lh8e80xhfeD6Ocd2W3Gf1K/Hmc=" crossorigin="anonymous" defer></script><script src="https://vishal1132.github.io/js/icons.min.a35670f2f90c398e5ee5c8e509b428fae75aa2746854cee10b60794633076859.js" integrity="sha256-o1Zw8vkMOY5e5cjlCbQo&#43;udaonRoVM7hC2B5RjMHaFk=" crossorigin="anonymous" defer></script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('https:\/\/vishal1132.github.io\/service-worker.js').then(function(reg) {
+      console.log('Successfully registered service worker', reg);
+    }).catch(function(err) {
+      console.warn('Error whilst registering service worker', err);
+    });
+  });
+}
+</script><script src="https://vishal1132.github.io/js/viewer.min.4dba52a0a790f909408b7385316651299158381686401d50ff1f04dda6476473.js" integrity="sha256-TbpSoKeQ&#43;QlAi3OFMWZRKZFYOBaGQB1Q/x8E3aZHZHM=" crossorigin="anonymous" defer></script><script defer src="https://vishal1132.github.io/js/mermaid.min.f7f85f37aecd926c1536d7d7a068bda61384696972268ebd5624343dc57768e1.js" integrity="sha256-9/hfN67NkmwVNtfXoGi9phOEaWlyJo69ViQ0PcV3aOE=" crossorigin="anonymous"></script>
 
 </body>
 </html>
