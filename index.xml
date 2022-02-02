@@ -1,28 +1,53 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Dev With vishal</title>
-    <link>https://vishal1132.github.io/</link>
-    <description>Recent content on Dev With vishal</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Wed, 01 Sep 2021 11:36:50 +0800</lastBuildDate><atom:link href="https://vishal1132.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <title>/ on Dev With Vishal</title>
+    <link>/</link>
+    <description>Recent content in / on Dev With Vishal</description>
+    <generator>Hugo -- gohugo.io</generator><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Distributed Counter</title>
-      <link>https://vishal1132.github.io/posts/distributed-systems/distributed-counter/</link>
-      <pubDate>Wed, 01 Sep 2021 11:36:50 +0800</pubDate>
+      <title>Dev With Vishal</title>
+      <link>/dev-with-vishal/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://vishal1132.github.io/posts/distributed-systems/distributed-counter/</guid>
-      <description>I heard you wanted a practical distributed systems, so here it is writing hello world of distributed systems - a distributed counter. For a little of background, let&amp;rsquo;s just say you are trying to write a likes service which tracks likes for a particular post and you want to horizontally scale this service by adding multiple instances of this service due to whatever reasons. So, let&amp;rsquo;s just talk about the ways to achieve this.</description>
+      <guid>/dev-with-vishal/</guid>
+      <description></description>
     </item>
     
     <item>
-      <title>About</title>
-      <link>https://vishal1132.github.io/about/</link>
-      <pubDate>Thu, 28 Feb 2019 00:00:00 +0000</pubDate>
+      <title>En-Us</title>
+      <link>/en-us/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://vishal1132.github.io/about/</guid>
-      <description>Vishal Sharma(he/him/they) is a software developer from India. He started his software developer journey professionally in 2020. He works majorly on backend writing softwares/services that can scale and are inherently distributed. He writes mostly is mostly in go.</description>
+      <guid>/en-us/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>False</title>
+      <link>/false/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/false/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>True</title>
+      <link>/true/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/true/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Vishal Sharma</title>
+      <link>/vishal-sharma/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/vishal-sharma/</guid>
+      <description></description>
     </item>
     
   </channel>

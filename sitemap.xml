@@ -2,20 +2,30 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://vishal1132.github.io/</loc>
+    <loc>/</loc>
     <lastmod>2021-09-01T11:36:50+08:00</lastmod>
   </url><url>
-    <loc>https://vishal1132.github.io/posts/distributed-systems/distributed-counter/</loc>
+    <loc>/posts/distributed-systems/distributed-counter/</loc>
     <lastmod>2021-09-01T11:36:50+08:00</lastmod>
   </url><url>
-    <loc>https://vishal1132.github.io/posts/</loc>
+    <loc>/posts/</loc>
     <lastmod>2021-09-01T11:36:50+08:00</lastmod>
   </url><url>
-    <loc>https://vishal1132.github.io/about/</loc>
+    <loc>/about/</loc>
     <lastmod>2019-02-28T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://vishal1132.github.io/categories/</loc>
+    <loc>/</loc>
   </url><url>
-    <loc>https://vishal1132.github.io/tags/</loc>
+    <loc>/dev-with-vishal/</loc>
+  </url><url>
+    <loc>/en-us/</loc>
+  </url><url>
+    <loc>/false/</loc>
+  </url><url>
+    <loc>/search/</loc>
+  </url><url>
+    <loc>/true/</loc>
+  </url><url>
+    <loc>/vishal-sharma/</loc>
   </url>
 </urlset>
