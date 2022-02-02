@@ -1,10 +1,10 @@
 
 
-const pages = JSON.parse('[{"revision":1643804298,"url":"/"},{"revision":"79643b6d2fcce6df43e20eda9c2d9984","url":"/posts/distributed-systems/distributed-counter/"},{"revision":"a74dbcb35ee06db2c5314e7ff0d9268f","url":"/posts/"},{"revision":"8576ec274c98b3831668a172fa632d80","url":"/about/"},{"revision":1643804298,"url":"/"},{"revision":1643804298,"url":"/dev-with-vishal/"},{"revision":1643804298,"url":"/en-us/"},{"revision":1643804298,"url":"/false/"},{"revision":"e70fff4f74e107cdcde5c9e2abcfc149","url":"/search/"},{"revision":1643804298,"url":"/true/"},{"revision":1643804298,"url":"/vishal-sharma/"},{"revision":1643804298,"url":"/manifest.json"}]');
+const pages = JSON.parse('[{"revision":1643809336,"url":"/"},{"revision":"79643b6d2fcce6df43e20eda9c2d9984","url":"/posts/distributed-systems/distributed-counter/"},{"revision":"a74dbcb35ee06db2c5314e7ff0d9268f","url":"/posts/"},{"revision":"8576ec274c98b3831668a172fa632d80","url":"/about/"},{"revision":1643809336,"url":"/"},{"revision":1643809336,"url":"/dev-with-vishal/"},{"revision":1643809336,"url":"/en-us/"},{"revision":1643809336,"url":"/false/"},{"revision":"e70fff4f74e107cdcde5c9e2abcfc149","url":"/search/"},{"revision":1643809336,"url":"/true/"},{"revision":1643809336,"url":"/vishal-sharma/"},{"revision":1643809336,"url":"/manifest.json"}]');
 const assets = JSON.parse('[{"revision":null,"url":"/css/main.min.b7a6eda8d46e39a549f182cf72a9ff4f4c1d4d82c31ecc3ede0b7f4d5b26f32b.css"},{"revision":null,"url":"/js/main.a365cf8aadc379e3f52dd2b8d8b87c7bcd3185f783e8e71dd96dc67f52bf1e67.js"},{"revision":null,"url":"/js/icons.min.a35670f2f90c398e5ee5c8e509b428fae75aa2746854cee10b60794633076859.js"},{"revision":"81c7b110dc744add1c8adfe8d840f168","url":"/.DS_Store"},{"revision":"08dc4fa6b1850af14889c5c945afb7e5","url":"/images/logo.webp"},{"revision":"fbe1130e45e170240e7283df3c707bcc","url":"/images/profile.webp"}]');
 const multilingual = false;
 const config = {
-    version: 1643804298,
+    version: 1643809336,
     multilingual: false,
     pages: pages,
     assets: assets
