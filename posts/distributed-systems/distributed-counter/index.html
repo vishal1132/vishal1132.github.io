@@ -8,12 +8,12 @@
 <link rel="icon" href="/images/icons/icon-16x16.png" sizes="16x16" type="image/png">
 <link rel="icon" href="/images/icons/favicon.ico">
 <link rel="manifest" href="/manifest.json">
-<meta name="keywords" content="Distributed Systems, CRDTs, G-Set CRDT, Go" />
+<meta name="keywords" content="CRDTs, G-Set CRDT, Go" />
 <meta name="description" content="Write a distributed counter in go" /><meta itemprop="name" content="Distributed Counter">
 <meta itemprop="description" content="Write a distributed counter in go"><meta itemprop="datePublished" content="2021-09-01T11:36:50+08:00" />
 <meta itemprop="dateModified" content="2021-09-01T11:36:50+08:00" />
 <meta itemprop="wordCount" content="1705">
-<meta itemprop="keywords" content="Distributed Systems,CRDTs," /><meta property="og:title" content="Distributed Counter" />
+<meta itemprop="keywords" content="CRDTs," /><meta property="og:title" content="Distributed Counter" />
 <meta property="og:description" content="Write a distributed counter in go" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/posts/distributed-systems/distributed-counter/" /><meta property="article:section" content="posts" />
@@ -155,8 +155,20 @@ Dev With Vishal
   </div>
 </form>
       <ul class="navbar-nav ms-auto"><li class="nav-item">
-          <a class="nav-link" href="/series/">
-            <i class="fas fa-fw fa-columns"></i>Series
+          <a class="nav-link" href="/tags">
+            <i class='fas fa-fw fa-tags'></i>Tags
+          </a>
+        </li><li class="nav-item">
+          <a class="nav-link" href="/series">
+            <i class='fas fa-fw fa-columns'></i>Series
+          </a>
+        </li><li class="nav-item">
+          <a class="nav-link" href="/categories">
+            <i class='fas fa-fw fa-folder'></i>Categories
+          </a>
+        </li><li class="nav-item">
+          <a class="nav-link" href="/archives">
+            <i class='fas fa-fw fa-file-archive'></i>Archives
           </a>
         </li></ul>
     </div>
@@ -168,7 +180,7 @@ Dev With Vishal
 <div class="col-lg-8">
   <div class="container"><nav class="row card component" aria-label="breadcrumb">
   <div class="card-body">
-    <ol class="breadcrumb "><li class="breadcrumb-item"><a href="/">Home</a></li><li class="breadcrumb-item"><a href="/posts/">Posts</a></li><li class="breadcrumb-item active">Distributed Counter</li></ol>
+    <ol class="breadcrumb "><li class="breadcrumb-item"><a href="/">Home</a></li><li class="breadcrumb-item"><a href="/posts/"></a></li><li class="breadcrumb-item active">Distributed Counter</li></ol>
   </div>
 </nav><div class="post-panel-wrapper">
   <div class="d-flex flex-column component rounded post-panel">
@@ -203,7 +215,7 @@ Dev With Vishal
     Sep 1, 2021
   </span><span class="post-reading-time">
     9 min read
-  </span><span class="post-taxonomies"><a href="/tags/distributed-systems/" class="badge post-taxonomy">Distributed Systems</a><a href="/series/distributed-systems/" class="badge post-taxonomy">Distributed Systems</a><a href="/tags/crdts/" class="badge post-taxonomy">CRDTs</a><a href="/series/distributed-systems/" class="badge post-taxonomy">Distributed Systems</a><a href="/tags/distributed-systems/" class="badge post-taxonomy">Distributed Systems</a><a href="/tags/crdts/" class="badge post-taxonomy">CRDTs</a></span>
+  </span><span class="post-taxonomies"><a href="/tags/crdts/" class="badge post-taxonomy">CRDTs</a><a href="/series/distributed-systems/" class="badge post-taxonomy">Distributed Systems</a><a href="/categories/technical/" class="badge post-taxonomy">technical</a><a href="/categories/engineering/" class="badge post-taxonomy">engineering</a><a href="/categories/technical/" class="badge post-taxonomy">technical</a><a href="/categories/engineering/" class="badge post-taxonomy">engineering</a><a href="/series/distributed-systems/" class="badge post-taxonomy">Distributed Systems</a><a href="/tags/crdts/" class="badge post-taxonomy">CRDTs</a></span>
 </div>
 <div class="post-content mb-3"><p>I heard you wanted a practical distributed systems, so here it is writing hello world of distributed systems - a distributed counter. For a little of background, let&rsquo;s just say you are trying to write a likes service which tracks likes for a particular post and you want to horizontally scale this service by adding multiple instances of this service due to whatever reasons. So, let&rsquo;s just talk about the ways to achieve this.</p>
 <p>This seems like-</p>
@@ -438,6 +450,17 @@ Dev With Vishal
         <div class="py-2"><a href="/series/distributed-systems/" class="badge rounded post-taxonomy" title="Distributed Systems">
             Distributed Systems<span class="badge badge-sm text-white bg-accent ms-1">1</span></a></div>
       </div>
+    </section><section class="categories-taxonomies row card component">
+      <div class="card-header">
+        <h2 class="card-title">
+          <a href="/categories">Categories</a>
+        </h2>
+      </div>
+      <div class="card-body">
+        <div class="py-2"><a href="/categories/engineering/" class="badge rounded post-taxonomy" title="engineering">
+            engineering<span class="badge badge-sm text-white bg-accent ms-1">1</span></a><a href="/categories/technical/" class="badge rounded post-taxonomy" title="technical">
+            technical<span class="badge badge-sm text-white bg-accent ms-1">1</span></a></div>
+      </div>
     </section><section class="tags-taxonomies row card component">
       <div class="card-header">
         <h2 class="card-title">
@@ -446,8 +469,7 @@ Dev With Vishal
       </div>
       <div class="card-body">
         <div class="py-2"><a href="/tags/crdts/" class="badge rounded post-taxonomy" title="CRDTs">
-            CRDTs<span class="badge badge-sm text-white bg-accent ms-1">1</span></a><a href="/tags/distributed-systems/" class="badge rounded post-taxonomy" title="Distributed Systems">
-            Distributed Systems<span class="badge badge-sm text-white bg-accent ms-1">1</span></a></div>
+            CRDTs<span class="badge badge-sm text-white bg-accent ms-1">1</span></a></div>
       </div>
     </section>
     
