@@ -148,7 +148,11 @@ Dev With Vishal
     <input class="form-control rounded-pill" name="q" type="search" aria-label="Search">
   </div>
 </form>
-      <ul class="navbar-nav ms-auto"></ul>
+      <ul class="navbar-nav ms-auto"><li class="nav-item">
+          <a class="nav-link" href="/series/">
+            <i class="fas fa-fw fa-columns"></i>Series
+          </a>
+        </li></ul>
     </div>
   </div>
 </nav>
@@ -172,7 +176,7 @@ Dev With Vishal
     Sep 1, 2021
   </span><span class="post-reading-time">
     9 min read
-  </span><span class="post-taxonomies"></span>
+  </span><span class="post-taxonomies"><a href="/tags/distributed-systems/" class="badge post-taxonomy">Distributed Systems</a><a href="/series/distributed-systems/" class="badge post-taxonomy">Distributed Systems</a><a href="/tags/crdts/" class="badge post-taxonomy">CRDTs</a><a href="/series/distributed-systems/" class="badge post-taxonomy">Distributed Systems</a><a href="/tags/distributed-systems/" class="badge post-taxonomy">Distributed Systems</a><a href="/tags/crdts/" class="badge post-taxonomy">CRDTs</a></span>
 </div>
 <div class="post-summary">
       <p>I heard you wanted a practical distributed systems, so here it is writing hello world of distributed systems - a distributed counter. For a little of background, let’s just say you are trying to write a likes service which tracks likes for a particular post and you want to horizontally scale this service by adding...</p><div><a class="btn btn-sm btn-primary btn-read-more" href="/posts/distributed-systems/distributed-counter/">Read More</a></div>
@@ -223,7 +227,28 @@ Dev With Vishal
 </a>
       </li></ul>
   </div>
-</section>
+</section><section class="series-taxonomies row card component">
+      <div class="card-header">
+        <h2 class="card-title">
+          <a href="/series">Series</a>
+        </h2>
+      </div>
+      <div class="card-body">
+        <div class="py-2"><a href="/series/distributed-systems/" class="badge rounded post-taxonomy" title="Distributed Systems">
+            Distributed Systems<span class="badge badge-sm text-white bg-accent ms-1">1</span></a></div>
+      </div>
+    </section><section class="tags-taxonomies row card component">
+      <div class="card-header">
+        <h2 class="card-title">
+          <a href="/tags">Tags</a>
+        </h2>
+      </div>
+      <div class="card-body">
+        <div class="py-2"><a href="/tags/crdts/" class="badge rounded post-taxonomy" title="CRDTs">
+            CRDTs<span class="badge badge-sm text-white bg-accent ms-1">1</span></a><a href="/tags/distributed-systems/" class="badge rounded post-taxonomy" title="Distributed Systems">
+            Distributed Systems<span class="badge badge-sm text-white bg-accent ms-1">1</span></a></div>
+      </div>
+    </section>
     
   </div>
 </aside>
