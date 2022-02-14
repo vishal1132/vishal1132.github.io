@@ -8,10 +8,10 @@
     <lastBuildDate>Wed, 01 Sep 2021 11:36:50 +0800</lastBuildDate><atom:link href="/series/distributed-systems/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Distributed Counter</title>
-      <link>/posts/distributed-systems/distributed-counter/</link>
+      <link>/posts/distributed-counter/</link>
       <pubDate>Wed, 01 Sep 2021 11:36:50 +0800</pubDate>
       
-      <guid>/posts/distributed-systems/distributed-counter/</guid>
+      <guid>/posts/distributed-counter/</guid>
       <description>I heard you wanted a practical distributed systems, so here it is writing hello world of distributed systems - a distributed counter. For a little of background, let&amp;rsquo;s just say you are trying to write a likes service which tracks likes for a particular post and you want to horizontally scale this service by adding multiple instances of this service due to whatever reasons. So, let&amp;rsquo;s just talk about the ways to achieve this.</description>
     </item>
     

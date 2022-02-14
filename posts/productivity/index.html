@@ -1,0 +1,569 @@
+<!doctype html><html lang="en" data-palette="blue"
+  >
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Productivity - Dev With Vishal</title><link rel="apple-touch-icon" href="/images/icons/icon-180x180.png" sizes="180x180">
+<link rel="icon" href="/images/icons/icon-32x32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="/images/icons/icon-16x16.png" sizes="16x16" type="image/png">
+<link rel="icon" href="/images/icons/favicon.ico">
+<link rel="manifest" href="/manifest.json">
+<meta name="keywords" content="" />
+<meta name="description" content="Get more productive" /><meta itemprop="name" content="Productivity">
+<meta itemprop="description" content="Get more productive"><meta itemprop="datePublished" content="2022-02-12T11:36:50+08:00" />
+<meta itemprop="dateModified" content="2022-02-12T11:36:50+08:00" />
+<meta itemprop="wordCount" content="2603">
+<meta itemprop="keywords" content="Leadership,productivity," /><meta property="og:title" content="Productivity" />
+<meta property="og:description" content="Get more productive" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/posts/productivity/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-02-12T11:36:50+08:00" />
+<meta property="article:modified_time" content="2022-02-12T11:36:50+08:00" />
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Productivity"/>
+<meta name="twitter:description" content="Get more productive"/>
+<meta name="twitter:site" content="@vishalssh"/>
+<link rel="stylesheet" href="/css/main.min.b7a6eda8d46e39a549f182cf72a9ff4f4c1d4d82c31ecc3ede0b7f4d5b26f32b.css" integrity="sha256-t6btqNRuOaVJ8YLPcqn/T0wdTYLDHsw&#43;3gt/TVsm8ys=" crossorigin="anonymous"><link rel="stylesheet" href="/css/viewer.min.3d228794bcedbbfa0412beb8fbc1ec6973202945e42af7004f742a4d7bd620ab.css" integrity="sha256-PSKHlLztu/oEEr64&#43;8HsaXMgKUXkKvcAT3QqTXvWIKs=" crossorigin="anonymous"></head>
+  <body><script>const items=['mode','palette'];items.forEach(function(a){const b=localStorage.getItem('hbs-'+a);b&&document.body.parentElement.setAttribute('data-'+a,b)})</script><header><nav class="navbar top-app-bar top-app-bar-expand-lg fixed-top">
+  <div class="container">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <i class="fas fa-bars"></i>
+    </button><a class="navbar-brand flex-grow-1 flex-lg-grow-0 text-center text-lg-start mx-auto me-lg-3" href="/"><img class="logo" alt="Logo" src="/images/logo.webp" loading="lazy"
+   width="500" height="500"
+   />
+Dev With Vishal
+    </a>
+    <div class="offcanvas offcanvas-bottom surface" tabindex="-1" id="offcanvasSocialShare" aria-labelledby="offcanvasSocialShare">
+  <div class="offcanvas-header">
+    <h3 class="offcanvas-title">Share</h3>
+    <button type="button" class="btn btn-sm btn-outline-primary" data-bs-dismiss="offcanvas" aria-label="Close">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+  <div class="offcanvas-body">
+    <a class="btn btn-sm btn-outline-primary social-share-button" rel="noopener noreferrer" aria-label="Twitter Share Button"
+      target="_blank" href="https://twitter.com/intent/tweet?title=Productivity&url=%2fposts%2fproductivity%2f">
+      <i class="fab fa-fw fa-twitter"></i> Twitter
+    </a>
+    <a class="btn btn-sm btn-outline-primary social-share-button" rel="noopener noreferrer" aria-label="Facebook Share Button"
+      target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=%2fposts%2fproductivity%2f">
+      <i class="fab fa-fw fa-facebook-f"></i> Facebook
+    </a>
+  </div>
+</div>
+    <button class="navbar-settings" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSettings"
+  aria-controls="offcanvasSettings" aria-label="Toggle settings">
+  <i class="fas fa-ellipsis-v"></i>
+</button>
+
+<div class="offcanvas offcanvas-end surface h-100" tabindex="-1" id="offcanvasSettings" aria-labelledby="offcanvasSettings">
+  <div class="offcanvas-header">
+    <h3 class="offcanvas-title">Settings</h3>
+    <button type="button" class="btn btn-sm btn-outline-primary" data-bs-dismiss="offcanvas" aria-label="Close">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+  <div class="offcanvas-body d-flex flex-column">
+
+<section class="setting">
+  <form class="row">
+    <div class="col-auto">
+      <label><i class="fas fa-fw fa-adjust"></i> Mode</label>
+    </div>
+    <div class="col-auto ms-auto">
+      <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" id="modeSwitcher">
+      </div>
+    </div>
+  </form>
+</section>
+
+<section class="setting">
+  <form class="font-size-switcher-form row">
+    <div class="col-auto">
+      <label for="fontSize" class="form-label"><i class="fas fa-fw fa-font"></i> Font Size</label>
+    </div>
+    <div class="col-auto ms-auto">
+      <input type="range" class="form-range" min="-2" max="2" id="fontSize">
+    </div>
+  </form>
+</section>
+
+
+<section class="setting palettes">
+  <form class="row">
+    <div class="col-auto">
+      <label><i class="fas fa-fw fa-palette"></i> Palette</label>
+    </div>
+    <div class="col-auto ms-auto">
+      <a id="btnPalette" class="btn btn-sm btn-outline-primary" role="button" aria-label="palettePicker">
+        <i class="fas fa-eye-dropper"></i>
+      </a>
+    </div>
+  </form>
+  <div class="mt-2 d-flex justify-content-between visually-hidden" id="palettePicker"><button type="button" id="palette-blue" aria-label="Blue"
+        class="btn btn-sm w-100 palette" data-palette="blue">
+      </button><button type="button" id="palette-blue-gray" aria-label="Blue Gray"
+        class="btn btn-sm w-100 palette" data-palette="blue-gray">
+      </button><button type="button" id="palette-brown" aria-label="Brown"
+        class="btn btn-sm w-100 palette" data-palette="brown">
+      </button><button type="button" id="palette-cyan" aria-label="Cyan"
+        class="btn btn-sm w-100 palette" data-palette="cyan">
+      </button><button type="button" id="palette-green" aria-label="Green"
+        class="btn btn-sm w-100 palette" data-palette="green">
+      </button><button type="button" id="palette-indigo" aria-label="Indigo"
+        class="btn btn-sm w-100 palette" data-palette="indigo">
+      </button><button type="button" id="palette-orange" aria-label="Orange"
+        class="btn btn-sm w-100 palette" data-palette="orange">
+      </button><button type="button" id="palette-pink" aria-label="Pink"
+        class="btn btn-sm w-100 palette" data-palette="pink">
+      </button><button type="button" id="palette-purple" aria-label="Purple"
+        class="btn btn-sm w-100 palette" data-palette="purple">
+      </button><button type="button" id="palette-red" aria-label="Red"
+        class="btn btn-sm w-100 palette" data-palette="red">
+      </button><button type="button" id="palette-teal" aria-label="Teal"
+        class="btn btn-sm w-100 palette" data-palette="teal">
+      </button><button type="button" id="palette-yellow" aria-label="Yellow"
+        class="btn btn-sm w-100 palette" data-palette="yellow">
+      </button></div>
+</section>
+<section class="setting actions d-flex justify-content-around mt-auto overflow-auto">
+  <a role="button" class="action action-go-back" href="javascript: window.history.back();">
+    <span class="action-icon"><i class="fas fa-2x fa-arrow-left"></i></span> Go back
+  </a>
+  <a role="button" class="action action-reload-page">
+    <span class="action-icon"><i class="fas fa-2x fa-redo-alt"></i></span> Reload
+  </a>
+  <a role="button" class="action action-copy-url">
+    <span class="action-icon"><i class="fas fa-2x fa-link"></i></span> Copy URL
+  </a><a class="action action-social-share" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSocialShare"
+    aria-controls="offcanvasSocialShare" aria-label="Toggle social share">
+    <span class="action-icon"><i class="fas fa-2x fa-share-alt"></i></span> Share
+  </a></section>
+
+</div>
+</div>
+
+    <div class="collapse navbar-collapse" tabindex="-1" id="navbarSupportedContent" aria-labelledby="navbarSupportedContent">
+      <form class="search-bar my-1" action="/search">
+  <div class="input-group input-group-sm">
+    <span class="btn btn-search disabled position-absolute left-0"><i class="fas fa-fw fa-search"></i></span>
+    <input class="form-control rounded-pill" name="q" type="search" aria-label="Search">
+  </div>
+</form>
+      <ul class="navbar-nav ms-auto"><li class="nav-item">
+          <a class="nav-link" href="/tags">
+            <i class='fas fa-fw fa-tags'></i>Tags
+          </a>
+        </li><li class="nav-item">
+          <a class="nav-link" href="/series">
+            <i class='fas fa-fw fa-columns'></i>Series
+          </a>
+        </li><li class="nav-item">
+          <a class="nav-link" href="/categories">
+            <i class='fas fa-fw fa-folder'></i>Categories
+          </a>
+        </li><li class="nav-item">
+          <a class="nav-link" href="/archives">
+            <i class='fas fa-fw fa-file-archive'></i>Archives
+          </a>
+        </li></ul>
+    </div>
+  </div>
+</nav>
+</header>
+<main role="main" class="container">
+      <div class="row content">
+<div class="col-lg-8">
+  <div class="container"><nav class="row card component" aria-label="breadcrumb">
+  <div class="card-body">
+    <ol class="breadcrumb "><li class="breadcrumb-item"><a href="/">Home</a></li><li class="breadcrumb-item"><a href="/posts/"></a></li><li class="breadcrumb-item active">Productivity</li></ol>
+  </div>
+</nav><div class="post-panel-wrapper">
+  <div class="d-flex flex-column component rounded post-panel">
+    
+    <a class="action action-panel-toggler" role="button" title="Panel toggler">
+      <i class="fas fa-fw fa-chevron-circle-down"></i>
+    </a>
+    <a id="sidebarToggler" class="action d-none d-lg-block" role="button" title="Sidebar toggler">
+  <i class="fas fa-fw fa-expand-alt" data-fa-transform="rotate-45"></i>
+</a>
+
+    
+
+    
+    
+    <a class="action" href="#post-comments" role="button" aria-label="Comments" title="Comments">
+  <i class="fas fa-fw fa-comments"></i>
+</a>
+    <a class="action" href="#postTOC" aria-controls="Table of contents" role="button" title="Table of contents">
+  <i class="fas fa-fw fa-list-alt"></i>
+</a>
+    
+  </div>
+</div>
+<article class="row card component mb-4 post">
+  <div class="card-header ">
+    <h1 class="card-title post-title">Productivity
+</h1>
+  </div>
+  <div class="card-body"><div class="post-meta">
+  <span class="post-date" title="created on 2022-02-12 09:06:50 &#43;0530 IST.">
+    Feb 12, 2022
+  </span><span class="post-reading-time">
+    13 min read
+  </span><span class="post-taxonomies"><a href="/tags/leadership/" class="badge post-taxonomy">Leadership</a><a href="/series/personal-productivity/" class="badge post-taxonomy">Personal Productivity</a><a href="/categories/productivity/" class="badge post-taxonomy">Productivity</a><a href="/tags/productivity/" class="badge post-taxonomy">productivity</a><a href="/categories/productivity/" class="badge post-taxonomy">Productivity</a><a href="/series/personal-productivity/" class="badge post-taxonomy">Personal Productivity</a><a href="/tags/leadership/" class="badge post-taxonomy">Leadership</a><a href="/tags/productivity/" class="badge post-taxonomy">productivity</a></span>
+</div>
+<div class="post-content mb-3"><h1 id="productivity">Productivity<a class="anchor ms-1" href="#productivity"><i class="fas fa-link"></i></a></h1>
+<p>So you probably have a couple thousand and a half things to do and 99% of them should have been done by now, but you didn&rsquo;t get <strong>enough</strong> time and that&rsquo;s why you will start <strong>tomorrow</strong> fresh again on achieving these, where tomorrow is some mystical land where 99% of the human productivity lives.
+Do you see a common pattern over the years where you wanted to do a lot of things but weren&rsquo;t able to? Yes there probably are a lot of things that were done wrong, and you might need to even start to rethink from scratch not just when would you achieve your goals or when your tomorrow or monday will come, but rather rationalise your thinking about goals and productivity. This page will contain some of the things that I do or I learnt the hard way.</p>
+<h3 id="you-own-all-your-time">You own all your time<a class="anchor ms-1" href="#you-own-all-your-time"><i class="fas fa-link"></i></a></h3>
+<p>What you are doing at the moment is the <strong>best</strong> use of your time <em><em>according to you</em></em>. Stop saying I don&rsquo;t have  time rather say it&rsquo;s not my priority and then reflect in your subconscious head <strong><em>Is what I am doing right now really my priority over the thing I am choosing not to do</em></strong>? But have a conviction either you are going to do or you are not, don&rsquo;t stay in between. This is one of my favourite tips which genuinely lets me take more control over my time.</p>
+<h3 id="use-a-to-do-list">Use a to-do list<a class="anchor ms-1" href="#use-a-to-do-list"><i class="fas fa-link"></i></a></h3>
+<p>Are you a software developer? Are you a product manager? Do you have a list of what needs to be done in the quarter or in a sprint for the company that you are working for? You most probably do. You can&rsquo;t even imagine starting a sprint without having a proper to-do list for the sprint. Then why don&rsquo;t you have a to-do list for your life outside of the company you work for? But I have all of this in my head(whatever I need to do)-
+Our brain is unfortunately optimized for having ideas. not storing them. The idea is inspired from <a href="https://gettingthingsdone.com/" target="_blank" rel="noopener noreferrer">Getting Things Done</a>
+ by <strong>David Allen</strong>. Have an inbox accessible to you most of the time, whenever you have an idea or a todo task, add it in your inbox. Delegate a project to it, and it should vanish from your inbox. Keep delegating your todos from inbox to projects to make space for new todos. I usually assign them labels which usually falls in one of these categories <code>[&quot;high-energy&quot;,&quot;low-energy&quot;,&quot;bed&quot;,&quot;mobile&quot;,&quot;desk&quot;]</code> and I can look at my todo list and grab the <code>high-energy</code>,<code>desk</code> tasks in the morning and <code>low-energy</code> tasks in the evening and make sure they are completed. I have a recurring task- plan out <code>tomorrow</code> where I need to look at my projects or the jira for my company and plan out what my tomorrow would look like. I have another recurring task <code>retrospect today</code> where I need to look at how my day went. A simple todoist app works too, no need to go fancy and build custom dashboards for GTD in notion or anywhere else. Just make sure, everything goes in the todo list. If watching netflix for 5 hours is what you are going to do tomorrow, put it up in the todo list, but if not that should be the first thing that goes out of that list.</p>
+<h3 id="use-a-time-tracker-tool">Use a time tracker tool<a class="anchor ms-1" href="#use-a-time-tracker-tool"><i class="fas fa-link"></i></a></h3>
+<p>Use a time tracker tool better something that integrates with your todo tool and track your time spend on a task. I use <a href="https://clockify.me/calendar" target="_blank" rel="noopener noreferrer">clockify</a>
+ which integrates nicely with todoist and I can in one click start a clockify timer from either my chrome extension or inside the todoist app and it starts tracking time on my calendar and gives a nice visualization of where my time went on the calendar! But wait do I have to tick the timer for each meeting too? I already took the pain to scheduled it. No worries, clockify synchronizes nicely with google calendar too, and you can connect your calendar to have your events on the clockify calendar. But I schedule meetings on my official calendar, and that&rsquo;s not permanent. What do you have for that? I use a tool called zapier which copies the events to my personal calendar in realtime- as soon as a new event is triggered in my official calendar and that&rsquo;s how I am always on top of my time.</p>
+<h3 id="reflect-on-your-goals-seldom">Reflect on your goals seldom<a class="anchor ms-1" href="#reflect-on-your-goals-seldom"><i class="fas fa-link"></i></a></h3>
+<p>Always fell in love with the process, but no matter how beautiful the process is- seldom take out time to reflect on the goals. Since productivity isn&rsquo;t about how much busywork you could cram in an hour, how organized you make your life, how beautiful your calendar looks, how everything is measured or how you have everything scheduled by a fancy tool/app. It&rsquo;s about the results you product, if you&rsquo;re not producing results in the things that matter, you&rsquo;re not getting anymore productive, you are just doing more busy work more efficiently. Ultimately we would like to be able to get the things done, we never could.</p>
+<h3 id="allocate-the-adequate-time-to-the-work">Allocate the adequate time to the work<a class="anchor ms-1" href="#allocate-the-adequate-time-to-the-work"><i class="fas fa-link"></i></a></h3>
+<p>If you alot yourself a day to write a simple unit test, it would probably take all that much. This is the idea of <a href="https://en.wikipedia.org/wiki/Parkinson%27s_law" target="_blank" rel="noopener noreferrer">parkinson&rsquo;s law</a>
+ which states that work expands to fill the time that we allocate to it. The idea is to keep short deadlines for the tasks, sometimes even unrealistic deadlines would work too. You&rsquo;ll not achieve 100% of the goal, but you know anyways that was an unrealistic deadline but that deadline would help you get way ahead in the progress. This I have learnt a hard way- if I don&rsquo;t have anything planned out for the day, and I just have to write a unit test which should probably take not more than 10 minutes, I end up writing that unit test only in the entire day even though I was on my laptop the whole day. I just keep on beautifying it, make sure the table driven tests that I have written has the nicest table structure etc.</p>
+<h3 id="2-minute-10-minute-30-minute-rule">2-minute, 10-minute, 30-minute rule<a class="anchor ms-1" href="#2-minute-10-minute-30-minute-rule"><i class="fas fa-link"></i></a></h3>
+<p>Make a rule that if a task takes anything less than 2 minutes to complete, I will just complete it straight away rather than queuing it up in a pile and then dequeuing it when it is no longer even substantial. For example- I need to track the interview that I give on <a href="https://huntr.co" target="_blank" rel="noopener noreferrer">huntr</a>
+ or I just need to jot down the points for the rejection email that I just received, it is probably going to take somewhere in the 2 minutes range window, therefore I will just do it straightaway rather than stacking it down to the pile of tasks.
+The 10 minute rule states- if you are ever feeling unproductive or demotivated or are running away from your task, just say to yourself I am just going to do it whole heartedly for 10 minutes nothing less nothing more. Once you hit somewhere around 10 mintues mark, you&rsquo;d have probably already developed interest in doing it and you can keep doing it further too.
+30-minute rule is also known as pomodoro rule which is a chinese technique (here 30 minute is in no sense a hard limit as with the above 2 as well). So whatever work you are doing, start a timer, disable all distractions and start working until the timer ticks. It is like a sprint, and when you are sprinting you are just sprinting with your whole heart towards the track(here your task). No matter what don&rsquo;t get distracted for those few minutes where you are sprinting to get your work done. <a href="https://www.minus.app/#:~:text=Work%20Privately-,Minus.,your%20data%20to%20the%20cloud." target="_blank" rel="noopener noreferrer">Minus</a>
+ to disable some notifications and minimize distractions via popups.</p>
+<h3 id="delegate">Delegate<a class="anchor ms-1" href="#delegate"><i class="fas fa-link"></i></a></h3>
+<p>You are probably saying yes to everything in your inbox, do those things have to be done specifically by you? I use a simple <a href="https://www.eisenhower.me/eisenhower-matrix/" target="_blank" rel="noopener noreferrer">Eisenhower Decision Marix</a>
+ to decide whether it can be delegated or not or when do I need to pick it up.</p>
+<p><img class="img-fluid" alt="Eisenhower Decision Matrix" src="/images/eisenhower.png" loading="lazy"
+   width="556" height="497"
+   />
+
+</p>
+<p>Refactor your resources- don&rsquo;t read thousands of blogs, have some trusted sources where you would information about what&rsquo;s happening in the world, what is the state of art technology or whatever is related to your job. Having a refactored inbox is a must- group all the CCs into a different inbox folder, don&rsquo;t religiously read and act upon CC&rsquo;d emails to you, and next time your boss asks you about a status of work that he CC&rsquo;d you on, just tell him I thought you were informing me and not assigning the work to me. Please next time send a direct email to me for the work I need to get done. Have a strong spam filtering so that an ad for a commodity doesn&rsquo;t make it to your inbox.</p>
+<h3 id="automate-the-third-time">Automate the third time<a class="anchor ms-1" href="#automate-the-third-time"><i class="fas fa-link"></i></a></h3>
+<p>Always opt for the easier method between the automating task or just getting it done for the first couple of times, but once you need to do it for the third time, please invest some time wondering if it can be automated, how much time is it going to save me? Is it worth automating it? I have seen almost 100% of the time it is worth automating the stuff you do in your daily work. Optimize for shorter commands or shortcuts that you use very often. I have more than 1100 aliases and more than a dozen shell functions to make my life easier.</p>
+<p>The next section will just contain the tools I use daily and would recommend everyone-</p>
+<ul>
+<li><a href="https://xbarapp.com/" target="_blank" rel="noopener noreferrer">xbar</a>
+ - this app, I last checked was specifically for mac and lets you put anything on your menu bar for mac. I have the PRs I have to review handy from anywhere and can go directly to that PR in one click, sometimes I do <code>kprtfwd auth iden 8080</code> but don&rsquo;t remember which kubecontext is currently active, here I go, I can just look at the menu bar no matter what foreground application I am running, and be sure about the kubecontext.</li>
+<li><a href="https://github.com/johnste/finicky" target="_blank" rel="noopener noreferrer">Finicky</a>
+- this allows for customized rules for browsing particular endpoints on a spceific browser. Since, I have 3 github accounts, it makes my life easy to choose finicky as the default browser and let it decide on which browser shall it open the endpoint.</li>
+<li><a href="https://github.com/koekeishiya/yabai" target="_blank" rel="noopener noreferrer">Yabai</a>
+- A tiling manager for mac.</li>
+<li><a href="https://www.warp.dev/" target="_blank" rel="noopener noreferrer">Warp</a>
+- terminal for Mac. Other options are- iTerm2, kitty,alakritty, hyper. I have used all of them and any of them were absolutely amazing.</li>
+<li><a href="https://todoist.com/" target="_blank" rel="noopener noreferrer">Todoist</a>
+- to track my todos</li>
+<li><a href="https;//huntr.co">Huntr</a>
+- to track my job applications, where I have applied, where I have got the offer letters from etc.</li>
+<li><a href="https://www.alfredapp.com/" target="_blank" rel="noopener noreferrer">Alfred</a>
+- efficiency app for mac, replacement for spotlight searching.</li>
+<li><a href="https://desktop.github.com/" target="_blank" rel="noopener noreferrer">Github Desktop</a>
+- desktop client for github, I personally didn&rsquo;t find it useful after I had to contribute to 3 different github accounts, rather gh-cli is what I use more.</li>
+<li><a href="https://obsidian.md" target="_blank" rel="noopener noreferrer">Obsidian</a>
+- notes taking app, with the amount of extensions and integrations available with obsidian, this notes taking app is simply amazing. Another alternatives are- notion, mem, one drive etc.</li>
+<li><a href="https://clockify.me/calendar" target="_blank" rel="noopener noreferrer">Clockify</a>
+- to track my time.</li>
+<li><a href="https://github.com/bloomrpc/bloomrpc" target="_blank" rel="noopener noreferrer">BloomRPC</a>
+- GUI to make gRPC calls easier.</li>
+<li><a href="https://www.postman.com/" target="_blank" rel="noopener noreferrer">Postman</a>
+- GUI for HTTP rest APIs and somewhat API documentation.</li>
+<li><a href="https://reclaim.ai" target="_blank" rel="noopener noreferrer">reclaim</a>
+- to reclaim my time and have some focus work time, so that colleagues don&rsquo;t schedule a meeting in my claimed time until it&rsquo;s p0.</li>
+<li><a href="https://cron.app/" target="_blank" rel="noopener noreferrer">cron</a>
+- a smart calendar app.</li>
+<li><a href="https://www.pgadmin.org/" target="_blank" rel="noopener noreferrer">pgAdmin4</a>
+- Postgres CLI</li>
+</ul>
+<p>Apps that <em>might be</em> good to have but doesn&rsquo;t aid much to productivity.</p>
+<ul>
+<li><a href="https://pock.app" target="_blank" rel="noopener noreferrer">Pock</a>
+- widget manager app for mac touchbar.</li>
+<li><a href="https://www.apowersoft.com/phone-mirror" target="_blank" rel="noopener noreferrer">APowerMirror</a>
+- mirror your phone on your mac, I don&rsquo;t write mobile applications that&rsquo;s why not very useful to me, but is very feature rich and reliant.</li>
+</ul>
+<p>Some CLI tools that I use and would recommend everyone-</p>
+<ul>
+<li><a href="https://grpc.io/docs/protoc-installation/" target="_blank" rel="noopener noreferrer">protoc</a>
+- for code generating client and API documentation using protos.</li>
+<li><a href="https://cli.github.com/" target="_blank" rel="noopener noreferrer">github cli</a>
+- to create issues directly from the CLi, create PRs etc.</li>
+<li><a href="https://github.com/rust-br" target="_blank" rel="noopener noreferrer">br</a>
+- a replacement for tree</li>
+<li><a href="https://github.com/ogham/exa" target="_blank" rel="noopener noreferrer">exa</a>
+- a replacement for ls</li>
+<li><a href="https://github.com/nerdypepper/eva" target="_blank" rel="noopener noreferrer">eva</a>
+- REPL calculator</li>
+<li><a href="https://dandavison.github.io/delta/" target="_blank" rel="noopener noreferrer">delta</a>
+- diff tool</li>
+<li><a href="https://www.zsh.org/" target="_blank" rel="noopener noreferrer">zsh</a>
+- shell, some zsh plugins that I use- git, docker, zsh-autosuggestions, fzf</li>
+<li><a href="https://github.com/ohmyzsh/ohmyzsh" target="_blank" rel="noopener noreferrer">oh-my-zsh</a>
+- configuration management for zsh</li>
+<li><a href="https://iredis.io/" target="_blank" rel="noopener noreferrer">iredis</a>
+- intuitive redis CLI with auto completion</li>
+<li><a href="https://www.pgcli.com/" target="_blank" rel="noopener noreferrer">pgcli</a>
+- intuitive psql CLI with auto completion</li>
+<li><a href="https://github.com/dalance/procs" target="_blank" rel="noopener noreferrer">procs</a>
+- replacement for ps</li>
+</ul>
+<p>Some useful shell functions-</p>
+<ul>
+<li>extract <!-- raw HTML omitted -->, no need to remember the command to extract the specific file type.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln"> 1</span>extract () {
+<span class="ln"> 2</span>    if [ -f $1 ] ; then
+<span class="ln"> 3</span>        case $1 in
+<span class="ln"> 4</span>            *.tar.bz2)        tar xjf $1        ;;
+<span class="ln"> 5</span>            *.tar.gz)         tar xzf $1        ;;
+<span class="ln"> 6</span>            *.bz2)            bunzip2 $1        ;;
+<span class="ln"> 7</span>            *.rar)            unrar x $1        ;;
+<span class="ln"> 8</span>            *.gz)             gunzip $1         ;;
+<span class="ln"> 9</span>            *.tar)            tar xf $1         ;;
+<span class="ln">10</span>            *.tar.xz)         tar xf $1         ;;
+<span class="ln">11</span>            *.tbz2)           tar xjf $1        ;;
+<span class="ln">12</span>            *.tgz)            tar xzf $1        ;;
+<span class="ln">13</span>            *.zip)            unzip $1          ;;
+<span class="ln">14</span>            *.Z)              uncompress $1     ;;
+<span class="ln">15</span>            *.7z)             7zr e $1          ;;
+<span class="ln">16</span>            *)                echo &#34;&#39;$1&#39; cannot be extracted via extract()&#34; ;;
+<span class="ln">17</span>        esac
+<span class="ln">18</span>    else
+<span class="ln">19</span>        echo &#34;&#39;$1&#39; is not a valid file&#34;
+<span class="ln">20</span>    fi
+<span class="ln">21</span>}
+</code></pre></div><ul>
+<li>uuid- to get a Universally Unique Identifier, this is very useful to me when I need to create some records with some uuid manually for testing, so have it handy, for this you need to have <code>jq</code> installed. The source code is encoded in <code>--data-raw</code> flag. You can find here for easier read- <a href="https://go.dev/play/p/9Nbnd3glsp_g" target="_blank" rel="noopener noreferrer">https://go.dev/play/p/9Nbnd3glsp_g</a>
+. You can pipe it into pbcopy to copy it onto clipboard.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln">1</span>uuid(){
+<span class="ln">2</span>         curl &#39;https://go.dev/_/compile?backend=&#39; -H &#39;accept: application/json, text/javascript, */*; q=0.01&#39; -H &#39;content-type: application/x-www-form-urlencoded; charset=UTF-8&#39; --data-raw &#39;version=2&amp;body=package+main%0A%0Aimport+(%0A%09%22fmt%22%0A%0A%09%22github.com%2Fgoogle%2Fuuid%22%0A)%0A%0Afunc+main()+%7B%0A%09fmt.Print(uuid.New().String())%0A%7D%0A&amp;withVet=true&#39; --compressed | jq &#34;.Events[0].Message&#34;
+<span class="ln">3</span>}
+</code></pre></div><ul>
+<li>dip- print out ips of all running docker containers</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln"> 1</span>function dip {
+<span class="ln"> 2</span>    echo &#34;IP addresses of all named running containers&#34;
+<span class="ln"> 3</span>
+<span class="ln"> 4</span>    for DOC in `dnames-fn`
+<span class="ln"> 5</span>    do
+<span class="ln"> 6</span>        IP=`docker inspect --format=&#39;{{range .NetworkSettings.Networks}}{{.IPAddress}} {{end}}&#39; &#34;$DOC&#34;`
+<span class="ln"> 7</span>        OUT+=$DOC&#39;\t&#39;$IP&#39;\n&#39;
+<span class="ln"> 8</span>    done
+<span class="ln"> 9</span>    echo -e $OUT | column -t
+<span class="ln">10</span>    unset OUT
+<span class="ln">11</span>}
+</code></pre></div><ul>
+<li>wp- watch pods, watch pods for specific app label in case of deployment if they are crashing or not etc.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln">1</span>function wp {
+<span class="ln">2</span>        watch -n1 &#34;kubectl get pods -l app=$1 -n $2&#34;
+<span class="ln">3</span>}
+</code></pre></div><ul>
+<li>pods- get all pods in a specific namespace or in all namespaces, same can be done for other kubernetes resources too- for example- deployment, services, ingresses etc.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln">1</span>function pods(){
+<span class="ln">2</span>        if [ $# -eq 0 ]; then
+<span class="ln">3</span>                kubectl get pods -A | while read -r line; do echo &#34;${line} | font=Menlo&#34;; done
+<span class="ln">4</span>        else
+<span class="ln">5</span>                kubectl get pods -n $1 | while read -r line; do echo &#34;${line} | font=Menlo&#34;; done
+<span class="ln">6</span>        fi
+<span class="ln">7</span>}
+</code></pre></div><ul>
+<li>numPods- numPods just returns the number for the pods, same can be done with other kubernetes resources</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln">1</span>function numPods(){
+<span class="ln">2</span>        if [ $# -eq 0 ]; then
+<span class="ln">3</span>                kubectl get pods -A 2&gt; /dev/null | grep -v NAME | wc -l | sed &#39;s/ //g&#39;
+<span class="ln">4</span>        else
+<span class="ln">5</span>                kubectl get pods -n $1 2&gt; /dev/null | grep -v NAME | wc -l | sed &#39;s/ //g&#39;
+<span class="ln">6</span>        fi
+<span class="ln">7</span>}
+</code></pre></div><ul>
+<li>kprtfwd can be used to port-forward a local port to service&rsquo;s port. Most of my services run on 8080, therefore specifying 8080 each time is redundant, therefore if there are just 3 args, the default port is 8080, change it to your default port, but in some cases when the service is not running on 8080 and some other port, you can specify an extra argument.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln">1</span>func kprtfwd(){
+<span class="ln">2</span>        if [ $# -eq 4 ]; then
+<span class="ln">3</span>                kubectl port-forward -n $1 svc/$2 $3:$4
+<span class="ln">4</span>        elif [ $# -eq 3 ]; then
+<span class="ln">5</span>                kubectl port-forward -n $1 svc/$2 $3:8080
+<span class="ln">6</span>        else
+<span class="ln">7</span>                echo &#34;usage: kprtfwd &lt;namespace&gt; &lt;service&gt; &lt;port-on-local&gt; &lt;port-on-container(by default 8080 if not given)&gt;&#34;
+<span class="ln">8</span>        fi
+<span class="ln">9</span>}
+</code></pre></div></div></div>
+  <div class="card-footer"><div class="post-navs d-flex justify-content-evenly">
+  <div class="post-nav post-prev"><i class="fas fa-fw fa-chevron-left"></i>
+    <a href="/posts/distributed-counter/">Distributed Counter
+</a>
+  </div></div></div>
+</article><div class="card component row post-comments" id="post-comments">
+  <div class="card-header">
+    <h2 class="card-title">Comments</h2>
+  </div>
+  <div class="card-body"><script src="https://utteranc.es/client.js"
+  repo="vishal1132/vishal1132.github.io"
+  issue-term="pathname"
+  label="comment"
+  theme="github-light"
+  crossorigin="anonymous"
+  async>
+</script></div>
+</div></div>
+</div><aside class="col-lg-4 sidebar d-flex">
+  <div class="container d-flex flex-column">
+    
+    <section class="card row text-center profile component">
+  <div class="card-body">
+    <div class="col-12 d-flex align-items-center justify-content-center"><img class="profile-avatar rounded-circle" alt="Vishal Sharma" src="/images/profile.webp" loading="lazy"
+   width="425" height="359"
+   />
+</div>
+    <div class="col-12 profile-meta"><div class="profile-name">Vishal Sharma</div><div class="profile-bio">Computer Science Engineer</div><div class="profile-location"><i class="fas fa-fw fa-map-marker-alt"></i>New Delhi, India</div><div class="profile-about"><i class="fas fa-fw fa-user"></i><a href="/about/">About</a></div><nav class="social-links nav justify-content-center"><a class="nav-link social-link" href="mailto:vishal.sharma09890@gmail.com" title="Email">
+      <i class="fas fa-fw fa-2x fa-envelope"></i>
+    </a><a class="nav-link social-link" target="_blank" href="https://github.com/vishal1132" title="GitHub" rel="noopener noreferrer">
+        <i class="fa-fw fa-2x fab fa-github"></i>
+      </a><a class="nav-link social-link" target="_blank" href="https://twitter.com/vishalssh" title="Twitter" rel="noopener noreferrer">
+        <i class="fa-fw fa-2x fab fa-twitter"></i>
+      </a></nav>
+</div>
+  </div>
+</section>
+  <div class="post-toc row mb-4 card component" id="postTOC">
+  <div class="card-header">
+    <h2 class="card-title">Contents</h2>
+  </div>
+  <div class="card-body">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#you-own-all-your-time">You own all your time</a></li>
+        <li><a href="#use-a-to-do-list">Use a to-do list</a></li>
+        <li><a href="#use-a-time-tracker-tool">Use a time tracker tool</a></li>
+        <li><a href="#reflect-on-your-goals-seldom">Reflect on your goals seldom</a></li>
+        <li><a href="#allocate-the-adequate-time-to-the-work">Allocate the adequate time to the work</a></li>
+        <li><a href="#2-minute-10-minute-30-minute-rule">2-minute, 10-minute, 30-minute rule</a></li>
+        <li><a href="#delegate">Delegate</a></li>
+        <li><a href="#automate-the-third-time">Automate the third time</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div><section class="featured-posts row card component">
+    <div class="card-header">
+      <h2 class="card-title">Featured Posts</h2>
+    </div>
+    <div class="card-body">
+      <ul class="post-list"><li>
+          <a href="/posts/productivity/">Productivity
+</a>
+        </li><li>
+          <a href="/posts/distributed-counter/">Distributed Counter
+</a>
+        </li></ul>
+    </div>
+  </section><section class="recent-posts row card component">
+  <div class="card-header">
+    <h2 class="card-title">Recent Posts</h2>
+  </div>
+  <div class="card-body">
+    <ul class="post-list"><li>
+        <a href="/posts/productivity/">Productivity
+</a>
+      </li><li>
+        <a href="/posts/distributed-counter/">Distributed Counter
+</a>
+      </li></ul>
+  </div>
+</section><section class="series-taxonomies row card component">
+      <div class="card-header">
+        <h2 class="card-title">
+          <a href="/series">Series</a>
+        </h2>
+      </div>
+      <div class="card-body">
+        <div class="py-2"><a href="/series/distributed-systems/" class="badge rounded post-taxonomy" title="Distributed Systems">
+            Distributed Systems<span class="badge badge-sm text-white bg-accent ms-1">1</span></a><a href="/series/personal-productivity/" class="badge rounded post-taxonomy" title="Personal Productivity">
+            Personal Productivity<span class="badge badge-sm text-white bg-accent ms-1">1</span></a></div>
+      </div>
+    </section><section class="categories-taxonomies row card component">
+      <div class="card-header">
+        <h2 class="card-title">
+          <a href="/categories">Categories</a>
+        </h2>
+      </div>
+      <div class="card-body">
+        <div class="py-2"><a href="/categories/engineering/" class="badge rounded post-taxonomy" title="engineering">
+            engineering<span class="badge badge-sm text-white bg-accent ms-1">1</span></a><a href="/categories/productivity/" class="badge rounded post-taxonomy" title="Productivity">
+            Productivity<span class="badge badge-sm text-white bg-accent ms-1">1</span></a><a href="/categories/technical/" class="badge rounded post-taxonomy" title="technical">
+            technical<span class="badge badge-sm text-white bg-accent ms-1">1</span></a></div>
+      </div>
+    </section><section class="tags-taxonomies row card component">
+      <div class="card-header">
+        <h2 class="card-title">
+          <a href="/tags">Tags</a>
+        </h2>
+      </div>
+      <div class="card-body">
+        <div class="py-2"><a href="/tags/crdts/" class="badge rounded post-taxonomy" title="CRDTs">
+            CRDTs<span class="badge badge-sm text-white bg-accent ms-1">1</span></a><a href="/tags/leadership/" class="badge rounded post-taxonomy" title="Leadership">
+            Leadership<span class="badge badge-sm text-white bg-accent ms-1">1</span></a><a href="/tags/productivity/" class="badge rounded post-taxonomy" title="productivity">
+            productivity<span class="badge badge-sm text-white bg-accent ms-1">1</span></a></div>
+      </div>
+    </section>
+    
+  </div>
+</aside>
+</div>
+    </main><footer class="footer mt-auto py-3 text-center container"><nav class="social-links nav justify-content-center mb-2"><a class="nav-link social-link" href="mailto:vishal.sharma09890@gmail.com" title="Email">
+      <i class="fas fa-fw fa-2x fa-envelope"></i>
+    </a><a class="nav-link social-link" target="_blank" href="https://github.com/vishal1132" title="GitHub" rel="noopener noreferrer">
+        <i class="fa-fw fa-2x fab fa-github"></i>
+      </a><a class="nav-link social-link" target="_blank" href="https://linkedin.com/vishal-sharma-878661b1" title="LinkedIn" rel="noopener noreferrer">
+        <i class="fa-fw fa-2x fab fa-linkedin-in"></i>
+      </a><a class="nav-link social-link" target="_blank" href="https://stackoverflow.com/users/11974515" title="Stack Overflow" rel="noopener noreferrer">
+        <i class="fa-fw fa-2x fab fa-stack-overflow"></i>
+      </a><a class="nav-link social-link" target="_blank" href="https://twitter.com/vishalssh" title="Twitter" rel="noopener noreferrer">
+        <i class="fa-fw fa-2x fab fa-twitter"></i>
+      </a></nav>
+
+
+
+</footer>
+<script src="/js/main.a365cf8aadc379e3f52dd2b8d8b87c7bcd3185f783e8e71dd96dc67f52bf1e67.js" integrity="sha256-o2XPiq3DeeP1LdK42Lh8e80xhfeD6Ocd2W3Gf1K/Hmc=" crossorigin="anonymous" defer></script><script src="/js/icons.min.a35670f2f90c398e5ee5c8e509b428fae75aa2746854cee10b60794633076859.js" integrity="sha256-o1Zw8vkMOY5e5cjlCbQo&#43;udaonRoVM7hC2B5RjMHaFk=" crossorigin="anonymous" defer></script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('\/service-worker.js').then(function(reg) {
+      console.log('Successfully registered service worker', reg);
+    }).catch(function(err) {
+      console.warn('Error whilst registering service worker', err);
+    });
+  });
+}
+</script><script src="/js/viewer.min.4dba52a0a790f909408b7385316651299158381686401d50ff1f04dda6476473.js" integrity="sha256-TbpSoKeQ&#43;QlAi3OFMWZRKZFYOBaGQB1Q/x8E3aZHZHM=" crossorigin="anonymous" defer></script><script defer src="/js/mermaid.min.f7f85f37aecd926c1536d7d7a068bda61384696972268ebd5624343dc57768e1.js" integrity="sha256-9/hfN67NkmwVNtfXoGi9phOEaWlyJo69ViQ0PcV3aOE=" crossorigin="anonymous"></script>
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'G-K36P0BL3FK', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+</body>
+</html>
