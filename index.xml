@@ -33,20 +33,20 @@
     </item>
     
     <item>
-      <title>Productivity</title>
-      <link>/categories/productivity/</link>
-      <pubDate>Sat, 12 Feb 2022 11:36:50 +0800</pubDate>
-      
-      <guid>/categories/productivity/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>productivity</title>
       <link>/tags/productivity/</link>
       <pubDate>Sat, 12 Feb 2022 11:36:50 +0800</pubDate>
       
       <guid>/tags/productivity/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Productivity</title>
+      <link>/categories/productivity/</link>
+      <pubDate>Sat, 12 Feb 2022 11:36:50 +0800</pubDate>
+      
+      <guid>/categories/productivity/</guid>
       <description></description>
     </item>
     

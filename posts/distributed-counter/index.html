@@ -12,7 +12,7 @@
 <meta name="description" content="Write a distributed counter in go" /><meta itemprop="name" content="Distributed Counter">
 <meta itemprop="description" content="Write a distributed counter in go"><meta itemprop="datePublished" content="2021-09-01T11:36:50+08:00" />
 <meta itemprop="dateModified" content="2021-09-01T11:36:50+08:00" />
-<meta itemprop="wordCount" content="1705">
+<meta itemprop="wordCount" content="1713">
 <meta itemprop="keywords" content="CRDTs," /><meta property="og:title" content="Distributed Counter" />
 <meta property="og:description" content="Write a distributed counter in go" />
 <meta property="og:type" content="article" />
@@ -25,8 +25,8 @@
 <meta name="twitter:title" content="Distributed Counter"/>
 <meta name="twitter:description" content="Write a distributed counter in go"/>
 <meta name="twitter:site" content="@vishalssh"/>
-<link rel="stylesheet" href="/css/main.min.b7a6eda8d46e39a549f182cf72a9ff4f4c1d4d82c31ecc3ede0b7f4d5b26f32b.css" integrity="sha256-t6btqNRuOaVJ8YLPcqn/T0wdTYLDHsw&#43;3gt/TVsm8ys=" crossorigin="anonymous"><link rel="stylesheet" href="/css/viewer.min.3d228794bcedbbfa0412beb8fbc1ec6973202945e42af7004f742a4d7bd620ab.css" integrity="sha256-PSKHlLztu/oEEr64&#43;8HsaXMgKUXkKvcAT3QqTXvWIKs=" crossorigin="anonymous"></head>
-  <body><script>const items=['mode','palette'];items.forEach(function(a){const b=localStorage.getItem('hbs-'+a);b&&document.body.parentElement.setAttribute('data-'+a,b)})</script><header><nav class="navbar top-app-bar top-app-bar-expand-lg fixed-top">
+<link rel="stylesheet" href="/css/main.min.b6cdf8228fc5b3487ec7e150c08afb57711fb35f05a5e2fce896257310ab80cc.css" integrity="sha256-ts34Io/Fs0h&#43;x&#43;FQwIr7V3Efs18FpeL86JYlcxCrgMw=" crossorigin="anonymous"><link rel="stylesheet" href="/css/viewer.min.3d228794bcedbbfa0412beb8fbc1ec6973202945e42af7004f742a4d7bd620ab.css" integrity="sha256-PSKHlLztu/oEEr64&#43;8HsaXMgKUXkKvcAT3QqTXvWIKs=" crossorigin="anonymous"></head>
+  <body><script>const items=["mode","palette"];items.forEach(function(e){const t=localStorage.getItem("hbs-"+e);t&&document.body.parentElement.setAttribute("data-"+e,t)})</script><header><nav class="navbar top-app-bar top-app-bar-expand-lg fixed-top">
   <div class="container">
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -279,87 +279,87 @@ Dev With Vishal
  library for logging. We need someway to make a cluster of nodes for which we are going to use <a href="https://github.com/hashicorp/memberlist" target="_blank" rel="noopener noreferrer">memberlist</a>
  from hashicorp which is a <em>hightly available</em> cluster aware membership protocol and going to gossip the likes with each other and preiodically reduce the entropy among the nodes.<!-- raw HTML omitted --></p>
 <p>To subscribe to the gossip layer of the memberlist protocol you have to implement <code>membership.Delegate</code> interface. The <code>NotifyMsg(b []byte)</code> method of the interface is going to notify you of any incoming gossip message. On invoke of this method we send it in a channel for which a state machine is looping indefinitely until the channel is closed and then taking necessary actions as approrpiate on receive of a gossip message. The relevant code is-</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln">1</span>func (s *server) NotifyMsg(b []byte) {
-<span class="ln">2</span>    s.chanMsg &lt;- b
-<span class="ln">3</span>}
-</code></pre></div><p>and looping on this channel to listen for events-</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln"> 1</span>func (s *server) loopSM() {
-<span class="ln"> 2</span>    for i := range s.chanMsg {
-<span class="ln"> 3</span>        s.logger.Debug().Msgf(&#34;Received message %s&#34;, string(i))
-<span class="ln"> 4</span>        var l likeDomain
-<span class="ln"> 5</span>        err := json.Unmarshal(i, &amp;l)
-<span class="ln"> 6</span>        if err != nil {
-<span class="ln"> 7</span>            s.logger.Debug().Msgf(&#34;Error unmarshalling message %e&#34;, err)
-<span class="ln"> 8</span>            continue
-<span class="ln"> 9</span>        }
-<span class="ln">10</span>        // if error is not nil add that to gset.
-<span class="ln">11</span>        _ = s.postLikes.AddLike(l.User, l.Post)
-<span class="ln">12</span>    }
-<span class="ln">13</span>}
-</code></pre></div><p>Also to reduce the entropy periodically we need to tell some local state of the node in some way which we achieve by</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln">1</span>s.mu.Lock()
-<span class="ln">2</span>defer s.mu.Unlock()
-<span class="ln">3</span>b, _ := json.Marshal(s.postLikes)
-<span class="ln">4</span>return b
-</code></pre></div><p>and then compare remote state received from some node&rsquo;s global state.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln"> 1</span>func (s *server) MergeRemoteState(buf []byte, join bool) {
-<span class="ln"> 2</span>    if len(buf) == 0 || !join {
-<span class="ln"> 3</span>        return
-<span class="ln"> 4</span>    }
-<span class="ln"> 5</span>    var temp = map[string]gset.Gset{}
-<span class="ln"> 6</span>    _ = json.Unmarshal(buf, &amp;temp) // deliberately ignore error so linter doesn&#39;t complain.
-<span class="ln"> 7</span>    // converge this temp into s.postLikes
-<span class="ln"> 8</span>    s.mu.Lock()
-<span class="ln"> 9</span>    defer s.mu.Unlock()
-<span class="ln">10</span>    for key, value := range temp {
-<span class="ln">11</span>        for _, user := range value.GetSet() {
-<span class="ln">12</span>            _ = s.postLikes.AddLike(key, user)
-<span class="ln">13</span>        }
-<span class="ln">14</span>    }
-<span class="ln">15</span>}
-</code></pre></div><p>Also we want to be notified when some node joins, leaves or update the cluster which we subscribe by implementing the <code>membership.EventDelegate</code> interface. The implementation of the interface looks like-</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln"> 1</span>func (s *server) NotifyJoin(n *memberlist.Node) {
-<span class="ln"> 2</span>    s.logger.Info().Msgf(&#34;node joined: %s  address: %s \n&#34;, n.String(), n.Addr.String())
-<span class="ln"> 3</span>}
-<span class="ln"> 4</span>
-<span class="ln"> 5</span>func (s *server) NotifyLeave(n *memberlist.Node) {
-<span class="ln"> 6</span>    s.logger.Info().Msgf(&#34;node left: %s \n&#34;, n.String())
-<span class="ln"> 7</span>}
-<span class="ln"> 8</span>
-<span class="ln"> 9</span>func (s *server) NotifyUpdate(n *memberlist.Node) {
-<span class="ln">10</span>    s.logger.Info().Msgf(&#34;node updated: %s \n&#34;, n.String())
-<span class="ln">11</span>}
-</code></pre></div><p>Also we need to broadcast the likes we get on a particular node to all the nodes for which we use gossip protocol of the membership layer by implementing the <code>membership.Broadcast</code> interface. The gossip protocol works exctly like how gossip works in general. You tell your friends something they tell something to their friends and so on the chain goes on and eventually the gossip is spread out to a whole lot of people. Similarly you get an event you gossip it to some nodes, which gossip it to some nodes again and so on, and so the event reaches every node eventually. So, on receiving the post request for like we emit an event in broadcast queue to be broadcasted to the cluster.<!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="ln">1</span><span class="cl">func (s *server) NotifyMsg(b []byte) {
+</span></span><span class="line"><span class="ln">2</span><span class="cl">    s.chanMsg &lt;- b
+</span></span><span class="line"><span class="ln">3</span><span class="cl">}
+</span></span></code></pre></div><p>and looping on this channel to listen for events-</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="ln"> 1</span><span class="cl">func (s *server) loopSM() {
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">    for i := range s.chanMsg {
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">        s.logger.Debug().Msgf(&#34;Received message %s&#34;, string(i))
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">        var l likeDomain
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">        err := json.Unmarshal(i, &amp;l)
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">        if err != nil {
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">            s.logger.Debug().Msgf(&#34;Error unmarshalling message %e&#34;, err)
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">            continue
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">        }
+</span></span><span class="line"><span class="ln">10</span><span class="cl">        // if error is not nil add that to gset.
+</span></span><span class="line"><span class="ln">11</span><span class="cl">        _ = s.postLikes.AddLike(l.User, l.Post)
+</span></span><span class="line"><span class="ln">12</span><span class="cl">    }
+</span></span><span class="line"><span class="ln">13</span><span class="cl">}
+</span></span></code></pre></div><p>Also to reduce the entropy periodically we need to tell some local state of the node in some way which we achieve by</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="ln">1</span><span class="cl">s.mu.Lock()
+</span></span><span class="line"><span class="ln">2</span><span class="cl">defer s.mu.Unlock()
+</span></span><span class="line"><span class="ln">3</span><span class="cl">b, _ := json.Marshal(s.postLikes)
+</span></span><span class="line"><span class="ln">4</span><span class="cl">return b
+</span></span></code></pre></div><p>and then compare remote state received from some node&rsquo;s global state.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="ln"> 1</span><span class="cl">func (s *server) MergeRemoteState(buf []byte, join bool) {
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">    if len(buf) == 0 || !join {
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">        return
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">    }
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">    var temp = map[string]gset.Gset{}
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">    _ = json.Unmarshal(buf, &amp;temp) // deliberately ignore error so linter doesn&#39;t complain.
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">    // converge this temp into s.postLikes
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">    s.mu.Lock()
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">    defer s.mu.Unlock()
+</span></span><span class="line"><span class="ln">10</span><span class="cl">    for key, value := range temp {
+</span></span><span class="line"><span class="ln">11</span><span class="cl">        for _, user := range value.GetSet() {
+</span></span><span class="line"><span class="ln">12</span><span class="cl">            _ = s.postLikes.AddLike(key, user)
+</span></span><span class="line"><span class="ln">13</span><span class="cl">        }
+</span></span><span class="line"><span class="ln">14</span><span class="cl">    }
+</span></span><span class="line"><span class="ln">15</span><span class="cl">}
+</span></span></code></pre></div><p>Also we want to be notified when some node joins, leaves or update the cluster which we subscribe by implementing the <code>membership.EventDelegate</code> interface. The implementation of the interface looks like-</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="ln"> 1</span><span class="cl">func (s *server) NotifyJoin(n *memberlist.Node) {
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">    s.logger.Info().Msgf(&#34;node joined: %s  address: %s \n&#34;, n.String(), n.Addr.String())
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">}
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">func (s *server) NotifyLeave(n *memberlist.Node) {
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">    s.logger.Info().Msgf(&#34;node left: %s \n&#34;, n.String())
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">}
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">func (s *server) NotifyUpdate(n *memberlist.Node) {
+</span></span><span class="line"><span class="ln">10</span><span class="cl">    s.logger.Info().Msgf(&#34;node updated: %s \n&#34;, n.String())
+</span></span><span class="line"><span class="ln">11</span><span class="cl">}
+</span></span></code></pre></div><p>Also we need to broadcast the likes we get on a particular node to all the nodes for which we use gossip protocol of the membership layer by implementing the <code>membership.Broadcast</code> interface. The gossip protocol works exctly like how gossip works in general. You tell your friends something they tell something to their friends and so on the chain goes on and eventually the gossip is spread out to a whole lot of people. Similarly you get an event you gossip it to some nodes, which gossip it to some nodes again and so on, and so the event reaches every node eventually. So, on receiving the post request for like we emit an event in broadcast queue to be broadcasted to the cluster.<!-- raw HTML omitted --></p>
 <p>And the get request gets the information from it&rsquo;s local in memory database, and therefore it might be possible the like recorded at a particular node might not have reached here until now, but that&rsquo;s alright we can be eventually consistent here. We can show the like after sometime, the important thing is that we don&rsquo;t lose the like. If you want stronger consistency for example- linearizability- you might want something like writing to a quorum of nodes at the time of writing a like and then getting it from the quorum of nodes again while reading the likes for a post. That&rsquo;s it, that&rsquo;s the distributed service/counter. Now we need some sort of orchestration to deploy these services we are going to be using kubernetes for that. Not pasting the entire <em>yamls</em> just pasting some relevant code.<!-- raw HTML omitted --></p>
 <p>The membership requires atleast one known node in the cluster to join the cluster. so we are going to create a <code>master deployment</code> with</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln">1</span>labels:
-<span class="ln">2</span>        workertype: master
-<span class="ln">3</span>        application: likes-distribute
-</code></pre></div><p>and a master deployment service to be able to connect with the pods described by master deployment.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln">1</span>spec:
-<span class="ln">2</span>  selector:
-<span class="ln">3</span>    workertype: master
-<span class="ln">4</span>    application: likes-distributed
-</code></pre></div><p>This can be a clusterip service because only the worker nodes that we are going to create just right after, are going to connect to master via this service. The worker nodes are not actually workers and the request can land up on any of the nodes/pods but the membership requires atleast one known member of the cluster to join the cluster.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln">1</span>metadata:
-<span class="ln">2</span>  labels:
-<span class="ln">3</span>        workertype: worker
-<span class="ln">4</span>        application: likes-distributed
-</code></pre></div><p>Distinguishing from master so that every pod doesn&rsquo;t create it&rsquo;s own cluster, then that&rsquo;s just meaningless. Now we need some service to be able to connect to n workers and 1 master.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln"> 1</span>spec:
-<span class="ln"> 2</span>  selector:
-<span class="ln"> 3</span>    application: likes-distributed
-<span class="ln"> 4</span>  type: LoadBalancer
-<span class="ln"> 5</span>  ports:
-<span class="ln"> 6</span>  - port: 80
-<span class="ln"> 7</span>    nodePort: 31001
-<span class="ln"> 8</span>    protocol: TCP
-<span class="ln"> 9</span>    targetPort: 8080
-<span class="ln">10</span>    name: http-server
-</code></pre></div><p>You can check out the whole source code <a href="https://github.com/vishal1132/distributedcounter" target="_blank" rel="noopener noreferrer">here</a>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="ln">1</span><span class="cl">labels:
+</span></span><span class="line"><span class="ln">2</span><span class="cl">        workertype: master
+</span></span><span class="line"><span class="ln">3</span><span class="cl">        application: likes-distribute
+</span></span></code></pre></div><p>and a master deployment service to be able to connect with the pods described by master deployment.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="ln">1</span><span class="cl">spec:
+</span></span><span class="line"><span class="ln">2</span><span class="cl">  selector:
+</span></span><span class="line"><span class="ln">3</span><span class="cl">    workertype: master
+</span></span><span class="line"><span class="ln">4</span><span class="cl">    application: likes-distributed
+</span></span></code></pre></div><p>This can be a clusterip service because only the worker nodes that we are going to create just right after, are going to connect to master via this service. The worker nodes are not actually workers and the request can land up on any of the nodes/pods but the membership requires atleast one known member of the cluster to join the cluster.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="ln">1</span><span class="cl">metadata:
+</span></span><span class="line"><span class="ln">2</span><span class="cl">  labels:
+</span></span><span class="line"><span class="ln">3</span><span class="cl">        workertype: worker
+</span></span><span class="line"><span class="ln">4</span><span class="cl">        application: likes-distributed
+</span></span></code></pre></div><p>Distinguishing from master so that every pod doesn&rsquo;t create it&rsquo;s own cluster, then that&rsquo;s just meaningless. Now we need some service to be able to connect to n workers and 1 master.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="ln"> 1</span><span class="cl">spec:
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">  selector:
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">    application: likes-distributed
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">  type: LoadBalancer
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">  ports:
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">  - port: 80
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">    nodePort: 31001
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">    protocol: TCP
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">    targetPort: 8080
+</span></span><span class="line"><span class="ln">10</span><span class="cl">    name: http-server
+</span></span></code></pre></div><p>You can check out the whole source code <a href="https://github.com/vishal1132/distributedcounter" target="_blank" rel="noopener noreferrer">here</a>
 , if you like the repo don&rsquo;t forget to give it a start. You can use <code>make run</code> to run the kubernetes cluster on your local, if you have minikube installed. It uses configmaps as well so please apply in order if you are applying manually. Then use-</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln">1</span>minikube service distributed-likes-service-cluster
-</code></pre></div><p>This will give you the service endpoint which you can use to register likes or get likes etc. A sample request looks something like-</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="ln">1</span><span class="cl">minikube service distributed-likes-service-cluster
+</span></span></code></pre></div><p>This will give you the service endpoint which you can use to register likes or get likes etc. A sample request looks something like-</p>
 <p><img class="img-fluid" alt="example" src="https://i.ibb.co/jrDc5BW/Screenshot-2021-08-15-at-1-06-35-AM.png" loading="lazy"
   
    />
@@ -494,7 +494,7 @@ Dev With Vishal
       <i class="fas fa-fw fa-2x fa-envelope"></i>
     </a><a class="nav-link social-link" target="_blank" href="https://github.com/vishal1132" title="GitHub" rel="noopener noreferrer">
         <i class="fa-fw fa-2x fab fa-github"></i>
-      </a><a class="nav-link social-link" target="_blank" href="https://linkedin.com/vishal-sharma-878661b1" title="LinkedIn" rel="noopener noreferrer">
+      </a><a class="nav-link social-link" target="_blank" href="https://linkedin.com/vishalssh" title="LinkedIn" rel="noopener noreferrer">
         <i class="fa-fw fa-2x fab fa-linkedin-in"></i>
       </a><a class="nav-link social-link" target="_blank" href="https://stackoverflow.com/users/11974515" title="Stack Overflow" rel="noopener noreferrer">
         <i class="fa-fw fa-2x fab fa-stack-overflow"></i>
@@ -505,7 +505,7 @@ Dev With Vishal
 
 
 </footer>
-<script src="/js/main.a365cf8aadc379e3f52dd2b8d8b87c7bcd3185f783e8e71dd96dc67f52bf1e67.js" integrity="sha256-o2XPiq3DeeP1LdK42Lh8e80xhfeD6Ocd2W3Gf1K/Hmc=" crossorigin="anonymous" defer></script><script src="/js/icons.min.a35670f2f90c398e5ee5c8e509b428fae75aa2746854cee10b60794633076859.js" integrity="sha256-o1Zw8vkMOY5e5cjlCbQo&#43;udaonRoVM7hC2B5RjMHaFk=" crossorigin="anonymous" defer></script>
+<script src="/js/main.a365cf8aadc379e3f52dd2b8d8b87c7bcd3185f783e8e71dd96dc67f52bf1e67.js" integrity="sha256-o2XPiq3DeeP1LdK42Lh8e80xhfeD6Ocd2W3Gf1K/Hmc=" crossorigin="anonymous" defer></script><script src="/js/icons.min.fb1b77be9bd37807602ec542d150423ad89114834c2e76ca7c004309310d64b0.js" integrity="sha256-&#43;xt3vpvTeAdgLsVC0VBCOtiRFINMLnbKfABDCTENZLA=" crossorigin="anonymous" defer></script>
 <script>
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
@@ -516,7 +516,7 @@ if ('serviceWorker' in navigator) {
     });
   });
 }
-</script><script src="/js/viewer.min.4dba52a0a790f909408b7385316651299158381686401d50ff1f04dda6476473.js" integrity="sha256-TbpSoKeQ&#43;QlAi3OFMWZRKZFYOBaGQB1Q/x8E3aZHZHM=" crossorigin="anonymous" defer></script><script defer src="/js/mermaid.min.f7f85f37aecd926c1536d7d7a068bda61384696972268ebd5624343dc57768e1.js" integrity="sha256-9/hfN67NkmwVNtfXoGi9phOEaWlyJo69ViQ0PcV3aOE=" crossorigin="anonymous"></script>
+</script><script src="/js/viewer.min.4f0b78319199ad080a1331f64e868866ccf303199b8144d80003d6ba8a4e5feb.js" integrity="sha256-Twt4MZGZrQgKEzH2ToaIZszzAxmbgUTYAAPWuopOX&#43;s=" crossorigin="anonymous" defer></script><script defer src="/js/mermaid.min.9ac08004ff48494356843c64dc5f1ccb6f327d8e6551947298da016ba4c550ab.js" integrity="sha256-msCABP9ISUNWhDxk3F8cy28yfY5lUZRymNoBa6TFUKs=" crossorigin="anonymous"></script>
 
 <script type="application/javascript">
 var doNotTrack = false;

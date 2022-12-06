@@ -25,8 +25,8 @@
 <meta name="twitter:title" content="Productivity"/>
 <meta name="twitter:description" content="Get more productive"/>
 <meta name="twitter:site" content="@vishalssh"/>
-<link rel="stylesheet" href="/css/main.min.b7a6eda8d46e39a549f182cf72a9ff4f4c1d4d82c31ecc3ede0b7f4d5b26f32b.css" integrity="sha256-t6btqNRuOaVJ8YLPcqn/T0wdTYLDHsw&#43;3gt/TVsm8ys=" crossorigin="anonymous"><link rel="stylesheet" href="/css/viewer.min.3d228794bcedbbfa0412beb8fbc1ec6973202945e42af7004f742a4d7bd620ab.css" integrity="sha256-PSKHlLztu/oEEr64&#43;8HsaXMgKUXkKvcAT3QqTXvWIKs=" crossorigin="anonymous"></head>
-  <body><script>const items=['mode','palette'];items.forEach(function(a){const b=localStorage.getItem('hbs-'+a);b&&document.body.parentElement.setAttribute('data-'+a,b)})</script><header><nav class="navbar top-app-bar top-app-bar-expand-lg fixed-top">
+<link rel="stylesheet" href="/css/main.min.b6cdf8228fc5b3487ec7e150c08afb57711fb35f05a5e2fce896257310ab80cc.css" integrity="sha256-ts34Io/Fs0h&#43;x&#43;FQwIr7V3Efs18FpeL86JYlcxCrgMw=" crossorigin="anonymous"><link rel="stylesheet" href="/css/viewer.min.3d228794bcedbbfa0412beb8fbc1ec6973202945e42af7004f742a4d7bd620ab.css" integrity="sha256-PSKHlLztu/oEEr64&#43;8HsaXMgKUXkKvcAT3QqTXvWIKs=" crossorigin="anonymous"></head>
+  <body><script>const items=["mode","palette"];items.forEach(function(e){const t=localStorage.getItem("hbs-"+e);t&&document.body.parentElement.setAttribute("data-"+e,t)})</script><header><nav class="navbar top-app-bar top-app-bar-expand-lg fixed-top">
   <div class="container">
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -320,87 +320,87 @@ The 10 minute rule states- if you are ever feeling unproductive or demotivated o
 <ul>
 <li>extract <!-- raw HTML omitted -->, no need to remember the command to extract the specific file type.</li>
 </ul>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln"> 1</span>extract () {
-<span class="ln"> 2</span>    if [ -f $1 ] ; then
-<span class="ln"> 3</span>        case $1 in
-<span class="ln"> 4</span>            *.tar.bz2)        tar xjf $1        ;;
-<span class="ln"> 5</span>            *.tar.gz)         tar xzf $1        ;;
-<span class="ln"> 6</span>            *.bz2)            bunzip2 $1        ;;
-<span class="ln"> 7</span>            *.rar)            unrar x $1        ;;
-<span class="ln"> 8</span>            *.gz)             gunzip $1         ;;
-<span class="ln"> 9</span>            *.tar)            tar xf $1         ;;
-<span class="ln">10</span>            *.tar.xz)         tar xf $1         ;;
-<span class="ln">11</span>            *.tbz2)           tar xjf $1        ;;
-<span class="ln">12</span>            *.tgz)            tar xzf $1        ;;
-<span class="ln">13</span>            *.zip)            unzip $1          ;;
-<span class="ln">14</span>            *.Z)              uncompress $1     ;;
-<span class="ln">15</span>            *.7z)             7zr e $1          ;;
-<span class="ln">16</span>            *)                echo &#34;&#39;$1&#39; cannot be extracted via extract()&#34; ;;
-<span class="ln">17</span>        esac
-<span class="ln">18</span>    else
-<span class="ln">19</span>        echo &#34;&#39;$1&#39; is not a valid file&#34;
-<span class="ln">20</span>    fi
-<span class="ln">21</span>}
-</code></pre></div><ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="ln"> 1</span><span class="cl">extract () {
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">    if [ -f $1 ] ; then
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">        case $1 in
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">            *.tar.bz2)        tar xjf $1        ;;
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">            *.tar.gz)         tar xzf $1        ;;
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">            *.bz2)            bunzip2 $1        ;;
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">            *.rar)            unrar x $1        ;;
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">            *.gz)             gunzip $1         ;;
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">            *.tar)            tar xf $1         ;;
+</span></span><span class="line"><span class="ln">10</span><span class="cl">            *.tar.xz)         tar xf $1         ;;
+</span></span><span class="line"><span class="ln">11</span><span class="cl">            *.tbz2)           tar xjf $1        ;;
+</span></span><span class="line"><span class="ln">12</span><span class="cl">            *.tgz)            tar xzf $1        ;;
+</span></span><span class="line"><span class="ln">13</span><span class="cl">            *.zip)            unzip $1          ;;
+</span></span><span class="line"><span class="ln">14</span><span class="cl">            *.Z)              uncompress $1     ;;
+</span></span><span class="line"><span class="ln">15</span><span class="cl">            *.7z)             7zr e $1          ;;
+</span></span><span class="line"><span class="ln">16</span><span class="cl">            *)                echo &#34;&#39;$1&#39; cannot be extracted via extract()&#34; ;;
+</span></span><span class="line"><span class="ln">17</span><span class="cl">        esac
+</span></span><span class="line"><span class="ln">18</span><span class="cl">    else
+</span></span><span class="line"><span class="ln">19</span><span class="cl">        echo &#34;&#39;$1&#39; is not a valid file&#34;
+</span></span><span class="line"><span class="ln">20</span><span class="cl">    fi
+</span></span><span class="line"><span class="ln">21</span><span class="cl">}
+</span></span></code></pre></div><ul>
 <li>uuid- to get a Universally Unique Identifier, this is very useful to me when I need to create some records with some uuid manually for testing, so have it handy, for this you need to have <code>jq</code> installed. The source code is encoded in <code>--data-raw</code> flag. You can find here for easier read- <a href="https://go.dev/play/p/9Nbnd3glsp_g" target="_blank" rel="noopener noreferrer">https://go.dev/play/p/9Nbnd3glsp_g</a>
 . You can pipe it into pbcopy to copy it onto clipboard.</li>
 </ul>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln">1</span>uuid(){
-<span class="ln">2</span>         curl &#39;https://go.dev/_/compile?backend=&#39; -H &#39;accept: application/json, text/javascript, */*; q=0.01&#39; -H &#39;content-type: application/x-www-form-urlencoded; charset=UTF-8&#39; --data-raw &#39;version=2&amp;body=package+main%0A%0Aimport+(%0A%09%22fmt%22%0A%0A%09%22github.com%2Fgoogle%2Fuuid%22%0A)%0A%0Afunc+main()+%7B%0A%09fmt.Print(uuid.New().String())%0A%7D%0A&amp;withVet=true&#39; --compressed | jq &#34;.Events[0].Message&#34;
-<span class="ln">3</span>}
-</code></pre></div><ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="ln">1</span><span class="cl">uuid(){
+</span></span><span class="line"><span class="ln">2</span><span class="cl">         curl &#39;https://go.dev/_/compile?backend=&#39; -H &#39;accept: application/json, text/javascript, */*; q=0.01&#39; -H &#39;content-type: application/x-www-form-urlencoded; charset=UTF-8&#39; --data-raw &#39;version=2&amp;body=package+main%0A%0Aimport+(%0A%09%22fmt%22%0A%0A%09%22github.com%2Fgoogle%2Fuuid%22%0A)%0A%0Afunc+main()+%7B%0A%09fmt.Print(uuid.New().String())%0A%7D%0A&amp;withVet=true&#39; --compressed | jq &#34;.Events[0].Message&#34;
+</span></span><span class="line"><span class="ln">3</span><span class="cl">}
+</span></span></code></pre></div><ul>
 <li>dip- print out ips of all running docker containers</li>
 </ul>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln"> 1</span>function dip {
-<span class="ln"> 2</span>    echo &#34;IP addresses of all named running containers&#34;
-<span class="ln"> 3</span>
-<span class="ln"> 4</span>    for DOC in `dnames-fn`
-<span class="ln"> 5</span>    do
-<span class="ln"> 6</span>        IP=`docker inspect --format=&#39;{{range .NetworkSettings.Networks}}{{.IPAddress}} {{end}}&#39; &#34;$DOC&#34;`
-<span class="ln"> 7</span>        OUT+=$DOC&#39;\t&#39;$IP&#39;\n&#39;
-<span class="ln"> 8</span>    done
-<span class="ln"> 9</span>    echo -e $OUT | column -t
-<span class="ln">10</span>    unset OUT
-<span class="ln">11</span>}
-</code></pre></div><ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="ln"> 1</span><span class="cl">function dip {
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">    echo &#34;IP addresses of all named running containers&#34;
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">    for DOC in `dnames-fn`
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">    do
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">        IP=`docker inspect --format=&#39;{{range .NetworkSettings.Networks}}{{.IPAddress}} {{end}}&#39; &#34;$DOC&#34;`
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">        OUT+=$DOC&#39;\t&#39;$IP&#39;\n&#39;
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">    done
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">    echo -e $OUT | column -t
+</span></span><span class="line"><span class="ln">10</span><span class="cl">    unset OUT
+</span></span><span class="line"><span class="ln">11</span><span class="cl">}
+</span></span></code></pre></div><ul>
 <li>wp- watch pods, watch pods for specific app label in case of deployment if they are crashing or not etc.</li>
 </ul>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln">1</span>function wp {
-<span class="ln">2</span>        watch -n1 &#34;kubectl get pods -l app=$1 -n $2&#34;
-<span class="ln">3</span>}
-</code></pre></div><ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="ln">1</span><span class="cl">function wp {
+</span></span><span class="line"><span class="ln">2</span><span class="cl">        watch -n1 &#34;kubectl get pods -l app=$1 -n $2&#34;
+</span></span><span class="line"><span class="ln">3</span><span class="cl">}
+</span></span></code></pre></div><ul>
 <li>pods- get all pods in a specific namespace or in all namespaces, same can be done for other kubernetes resources too- for example- deployment, services, ingresses etc.</li>
 </ul>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln">1</span>function pods(){
-<span class="ln">2</span>        if [ $# -eq 0 ]; then
-<span class="ln">3</span>                kubectl get pods -A | while read -r line; do echo &#34;${line} | font=Menlo&#34;; done
-<span class="ln">4</span>        else
-<span class="ln">5</span>                kubectl get pods -n $1 | while read -r line; do echo &#34;${line} | font=Menlo&#34;; done
-<span class="ln">6</span>        fi
-<span class="ln">7</span>}
-</code></pre></div><ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="ln">1</span><span class="cl">function pods(){
+</span></span><span class="line"><span class="ln">2</span><span class="cl">        if [ $# -eq 0 ]; then
+</span></span><span class="line"><span class="ln">3</span><span class="cl">                kubectl get pods -A | while read -r line; do echo &#34;${line} | font=Menlo&#34;; done
+</span></span><span class="line"><span class="ln">4</span><span class="cl">        else
+</span></span><span class="line"><span class="ln">5</span><span class="cl">                kubectl get pods -n $1 | while read -r line; do echo &#34;${line} | font=Menlo&#34;; done
+</span></span><span class="line"><span class="ln">6</span><span class="cl">        fi
+</span></span><span class="line"><span class="ln">7</span><span class="cl">}
+</span></span></code></pre></div><ul>
 <li>numPods- numPods just returns the number for the pods, same can be done with other kubernetes resources</li>
 </ul>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln">1</span>function numPods(){
-<span class="ln">2</span>        if [ $# -eq 0 ]; then
-<span class="ln">3</span>                kubectl get pods -A 2&gt; /dev/null | grep -v NAME | wc -l | sed &#39;s/ //g&#39;
-<span class="ln">4</span>        else
-<span class="ln">5</span>                kubectl get pods -n $1 2&gt; /dev/null | grep -v NAME | wc -l | sed &#39;s/ //g&#39;
-<span class="ln">6</span>        fi
-<span class="ln">7</span>}
-</code></pre></div><ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="ln">1</span><span class="cl">function numPods(){
+</span></span><span class="line"><span class="ln">2</span><span class="cl">        if [ $# -eq 0 ]; then
+</span></span><span class="line"><span class="ln">3</span><span class="cl">                kubectl get pods -A 2&gt; /dev/null | grep -v NAME | wc -l | sed &#39;s/ //g&#39;
+</span></span><span class="line"><span class="ln">4</span><span class="cl">        else
+</span></span><span class="line"><span class="ln">5</span><span class="cl">                kubectl get pods -n $1 2&gt; /dev/null | grep -v NAME | wc -l | sed &#39;s/ //g&#39;
+</span></span><span class="line"><span class="ln">6</span><span class="cl">        fi
+</span></span><span class="line"><span class="ln">7</span><span class="cl">}
+</span></span></code></pre></div><ul>
 <li>kprtfwd can be used to port-forward a local port to service&rsquo;s port. Most of my services run on 8080, therefore specifying 8080 each time is redundant, therefore if there are just 3 args, the default port is 8080, change it to your default port, but in some cases when the service is not running on 8080 and some other port, you can specify an extra argument.</li>
 </ul>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln">1</span>func kprtfwd(){
-<span class="ln">2</span>        if [ $# -eq 4 ]; then
-<span class="ln">3</span>                kubectl port-forward -n $1 svc/$2 $3:$4
-<span class="ln">4</span>        elif [ $# -eq 3 ]; then
-<span class="ln">5</span>                kubectl port-forward -n $1 svc/$2 $3:8080
-<span class="ln">6</span>        else
-<span class="ln">7</span>                echo &#34;usage: kprtfwd &lt;namespace&gt; &lt;service&gt; &lt;port-on-local&gt; &lt;port-on-container(by default 8080 if not given)&gt;&#34;
-<span class="ln">8</span>        fi
-<span class="ln">9</span>}
-</code></pre></div></div></div>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="ln">1</span><span class="cl">func kprtfwd(){
+</span></span><span class="line"><span class="ln">2</span><span class="cl">        if [ $# -eq 4 ]; then
+</span></span><span class="line"><span class="ln">3</span><span class="cl">                kubectl port-forward -n $1 svc/$2 $3:$4
+</span></span><span class="line"><span class="ln">4</span><span class="cl">        elif [ $# -eq 3 ]; then
+</span></span><span class="line"><span class="ln">5</span><span class="cl">                kubectl port-forward -n $1 svc/$2 $3:8080
+</span></span><span class="line"><span class="ln">6</span><span class="cl">        else
+</span></span><span class="line"><span class="ln">7</span><span class="cl">                echo &#34;usage: kprtfwd &lt;namespace&gt; &lt;service&gt; &lt;port-on-local&gt; &lt;port-on-container(by default 8080 if not given)&gt;&#34;
+</span></span><span class="line"><span class="ln">8</span><span class="cl">        fi
+</span></span><span class="line"><span class="ln">9</span><span class="cl">}
+</span></span></code></pre></div></div></div>
   <div class="card-footer"><div class="post-navs d-flex justify-content-evenly">
   <div class="post-nav post-prev"><i class="fas fa-fw fa-chevron-left"></i>
     <a href="/posts/distributed-counter/">Distributed Counter
@@ -530,7 +530,7 @@ The 10 minute rule states- if you are ever feeling unproductive or demotivated o
       <i class="fas fa-fw fa-2x fa-envelope"></i>
     </a><a class="nav-link social-link" target="_blank" href="https://github.com/vishal1132" title="GitHub" rel="noopener noreferrer">
         <i class="fa-fw fa-2x fab fa-github"></i>
-      </a><a class="nav-link social-link" target="_blank" href="https://linkedin.com/vishal-sharma-878661b1" title="LinkedIn" rel="noopener noreferrer">
+      </a><a class="nav-link social-link" target="_blank" href="https://linkedin.com/vishalssh" title="LinkedIn" rel="noopener noreferrer">
         <i class="fa-fw fa-2x fab fa-linkedin-in"></i>
       </a><a class="nav-link social-link" target="_blank" href="https://stackoverflow.com/users/11974515" title="Stack Overflow" rel="noopener noreferrer">
         <i class="fa-fw fa-2x fab fa-stack-overflow"></i>
@@ -541,7 +541,7 @@ The 10 minute rule states- if you are ever feeling unproductive or demotivated o
 
 
 </footer>
-<script src="/js/main.a365cf8aadc379e3f52dd2b8d8b87c7bcd3185f783e8e71dd96dc67f52bf1e67.js" integrity="sha256-o2XPiq3DeeP1LdK42Lh8e80xhfeD6Ocd2W3Gf1K/Hmc=" crossorigin="anonymous" defer></script><script src="/js/icons.min.a35670f2f90c398e5ee5c8e509b428fae75aa2746854cee10b60794633076859.js" integrity="sha256-o1Zw8vkMOY5e5cjlCbQo&#43;udaonRoVM7hC2B5RjMHaFk=" crossorigin="anonymous" defer></script>
+<script src="/js/main.a365cf8aadc379e3f52dd2b8d8b87c7bcd3185f783e8e71dd96dc67f52bf1e67.js" integrity="sha256-o2XPiq3DeeP1LdK42Lh8e80xhfeD6Ocd2W3Gf1K/Hmc=" crossorigin="anonymous" defer></script><script src="/js/icons.min.fb1b77be9bd37807602ec542d150423ad89114834c2e76ca7c004309310d64b0.js" integrity="sha256-&#43;xt3vpvTeAdgLsVC0VBCOtiRFINMLnbKfABDCTENZLA=" crossorigin="anonymous" defer></script>
 <script>
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
@@ -552,7 +552,7 @@ if ('serviceWorker' in navigator) {
     });
   });
 }
-</script><script src="/js/viewer.min.4dba52a0a790f909408b7385316651299158381686401d50ff1f04dda6476473.js" integrity="sha256-TbpSoKeQ&#43;QlAi3OFMWZRKZFYOBaGQB1Q/x8E3aZHZHM=" crossorigin="anonymous" defer></script><script defer src="/js/mermaid.min.f7f85f37aecd926c1536d7d7a068bda61384696972268ebd5624343dc57768e1.js" integrity="sha256-9/hfN67NkmwVNtfXoGi9phOEaWlyJo69ViQ0PcV3aOE=" crossorigin="anonymous"></script>
+</script><script src="/js/viewer.min.4f0b78319199ad080a1331f64e868866ccf303199b8144d80003d6ba8a4e5feb.js" integrity="sha256-Twt4MZGZrQgKEzH2ToaIZszzAxmbgUTYAAPWuopOX&#43;s=" crossorigin="anonymous" defer></script><script defer src="/js/mermaid.min.9ac08004ff48494356843c64dc5f1ccb6f327d8e6551947298da016ba4c550ab.js" integrity="sha256-msCABP9ISUNWhDxk3F8cy28yfY5lUZRymNoBa6TFUKs=" crossorigin="anonymous"></script>
 
 <script type="application/javascript">
 var doNotTrack = false;
