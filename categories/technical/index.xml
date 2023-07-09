@@ -5,7 +5,18 @@
     <link>/categories/technical/</link>
     <description>Recent content in technical on Dev With Vishal</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Wed, 01 Sep 2021 11:36:50 +0800</lastBuildDate><atom:link href="/categories/technical/index.xml" rel="self" type="application/rss+xml" />
+    <language>en</language>
+    <lastBuildDate>Fri, 07 Jul 2023 11:36:50 +0800</lastBuildDate><atom:link href="/categories/technical/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Liveness Probe a (G)unicorn tale</title>
+      <link>/posts/liveness-probe/</link>
+      <pubDate>Fri, 07 Jul 2023 11:36:50 +0800</pubDate>
+      
+      <guid>/posts/liveness-probe/</guid>
+      <description>Liveness probe is a mechanism used by orchestrator platforms, to determine which process has gone faulty and then usually attempts to restart it, how is dependent on the orchestrator.
+The faults are very much dependent on the process code, determining faults is dependent on both process code and the orchestration engine, handling the faults is usually left to the orchestration engine to handle it. So, it definitely sounds like a very useful feature then in the first glance for any orchestrator where a particular kind of process is running in a large number and for a very long time.</description>
+    </item>
+    
     <item>
       <title>Distributed Counter</title>
       <link>/posts/distributed-counter/</link>

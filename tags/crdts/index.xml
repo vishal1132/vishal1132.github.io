@@ -5,6 +5,7 @@
     <link>/tags/crdts/</link>
     <description>Recent content in CRDTs on Dev With Vishal</description>
     <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
     <lastBuildDate>Wed, 01 Sep 2021 11:36:50 +0800</lastBuildDate><atom:link href="/tags/crdts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Distributed Counter</title>

@@ -3,14 +3,28 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>/posts/</loc>
-    <lastmod>2022-02-12T11:36:50+08:00</lastmod>
-    <priority>0</priority>
+    <lastmod>2023-07-07T11:36:50+08:00</lastmod>
   </url><url>
     <loc>/categories/</loc>
-    <lastmod>2022-02-12T11:36:50+08:00</lastmod>
+    <lastmod>2023-07-07T11:36:50+08:00</lastmod>
   </url><url>
     <loc>/</loc>
-    <lastmod>2022-02-12T11:36:50+08:00</lastmod>
+    <lastmod>2023-07-07T11:36:50+08:00</lastmod>
+  </url><url>
+    <loc>/categories/engineering/</loc>
+    <lastmod>2023-07-07T11:36:50+08:00</lastmod>
+  </url><url>
+    <loc>/tags/kubernetes/</loc>
+    <lastmod>2023-07-07T11:36:50+08:00</lastmod>
+  </url><url>
+    <loc>/posts/liveness-probe/</loc>
+    <lastmod>2023-07-07T11:36:50+08:00</lastmod>
+  </url><url>
+    <loc>/tags/</loc>
+    <lastmod>2023-07-07T11:36:50+08:00</lastmod>
+  </url><url>
+    <loc>/categories/technical/</loc>
+    <lastmod>2023-07-07T11:36:50+08:00</lastmod>
   </url><url>
     <loc>/tags/leadership/</loc>
     <lastmod>2022-02-12T11:36:50+08:00</lastmod>
@@ -30,9 +44,6 @@
     <loc>/series/</loc>
     <lastmod>2022-02-12T11:36:50+08:00</lastmod>
   </url><url>
-    <loc>/tags/</loc>
-    <lastmod>2022-02-12T11:36:50+08:00</lastmod>
-  </url><url>
     <loc>/tags/crdts/</loc>
     <lastmod>2021-09-01T11:36:50+08:00</lastmod>
   </url><url>
@@ -40,12 +51,6 @@
     <lastmod>2021-09-01T11:36:50+08:00</lastmod>
   </url><url>
     <loc>/series/distributed-systems/</loc>
-    <lastmod>2021-09-01T11:36:50+08:00</lastmod>
-  </url><url>
-    <loc>/categories/engineering/</loc>
-    <lastmod>2021-09-01T11:36:50+08:00</lastmod>
-  </url><url>
-    <loc>/categories/technical/</loc>
     <lastmod>2021-09-01T11:36:50+08:00</lastmod>
   </url><url>
     <loc>/about/</loc>

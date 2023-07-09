@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>engineering on Dev With Vishal</title>
-    <link>/categories/engineering/</link>
-    <description>Recent content in engineering on Dev With Vishal</description>
+    <title>Kubernetes on Dev With Vishal</title>
+    <link>/tags/kubernetes/</link>
+    <description>Recent content in Kubernetes on Dev With Vishal</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Fri, 07 Jul 2023 11:36:50 +0800</lastBuildDate><atom:link href="/categories/engineering/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 07 Jul 2023 11:36:50 +0800</lastBuildDate><atom:link href="/tags/kubernetes/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Liveness Probe a (G)unicorn tale</title>
       <link>/posts/liveness-probe/</link>
@@ -15,15 +15,6 @@
       <guid>/posts/liveness-probe/</guid>
       <description>Liveness probe is a mechanism used by orchestrator platforms, to determine which process has gone faulty and then usually attempts to restart it, how is dependent on the orchestrator.
 The faults are very much dependent on the process code, determining faults is dependent on both process code and the orchestration engine, handling the faults is usually left to the orchestration engine to handle it. So, it definitely sounds like a very useful feature then in the first glance for any orchestrator where a particular kind of process is running in a large number and for a very long time.</description>
-    </item>
-    
-    <item>
-      <title>Distributed Counter</title>
-      <link>/posts/distributed-counter/</link>
-      <pubDate>Wed, 01 Sep 2021 11:36:50 +0800</pubDate>
-      
-      <guid>/posts/distributed-counter/</guid>
-      <description>I heard you wanted a practical distributed systems, so here it is writing hello world of distributed systems - a distributed counter. For a little of background, let&amp;rsquo;s just say you are trying to write a likes service which tracks likes for a particular post and you want to horizontally scale this service by adding multiple instances of this service due to whatever reasons. So, let&amp;rsquo;s just talk about the ways to achieve this.</description>
     </item>
     
   </channel>

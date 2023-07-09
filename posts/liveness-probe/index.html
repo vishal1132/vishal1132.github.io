@@ -1,0 +1,470 @@
+<!doctype html><html lang="en" data-palette="blue"
+  >
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Liveness Probe a (G)unicorn tale - Dev With Vishal</title><link rel="apple-touch-icon" href="/images/icons/icon-180x180.png" sizes="180x180">
+<link rel="icon" href="/images/icons/icon-32x32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="/images/icons/icon-16x16.png" sizes="16x16" type="image/png">
+<link rel="icon" href="/images/icons/favicon.ico">
+<link rel="manifest" href="/manifest.json">
+<meta name="keywords" content="Liveness Probe, Kubernetes, Django, Gunicorn" />
+<meta name="description" content="Write a distributed counter in go" /><meta itemprop="name" content="Liveness Probe a (G)unicorn tale">
+<meta itemprop="description" content="Write a distributed counter in go"><meta itemprop="datePublished" content="2023-07-07T11:36:50+08:00" />
+<meta itemprop="dateModified" content="2023-07-07T11:36:50+08:00" />
+<meta itemprop="wordCount" content="1739">
+<meta itemprop="keywords" content="Kubernetes," /><meta property="og:title" content="Liveness Probe a (G)unicorn tale" />
+<meta property="og:description" content="Write a distributed counter in go" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/posts/liveness-probe/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-07-07T11:36:50+08:00" />
+<meta property="article:modified_time" content="2023-07-07T11:36:50+08:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Liveness Probe a (G)unicorn tale"/>
+<meta name="twitter:description" content="Write a distributed counter in go"/>
+<meta name="twitter:site" content="@vishalssh"/>
+<link rel="stylesheet" href="/css/main.min.b6cdf8228fc5b3487ec7e150c08afb57711fb35f05a5e2fce896257310ab80cc.css" integrity="sha256-ts34Io/Fs0h&#43;x&#43;FQwIr7V3Efs18FpeL86JYlcxCrgMw=" crossorigin="anonymous"><link rel="stylesheet" href="/css/viewer.min.3d228794bcedbbfa0412beb8fbc1ec6973202945e42af7004f742a4d7bd620ab.css" integrity="sha256-PSKHlLztu/oEEr64&#43;8HsaXMgKUXkKvcAT3QqTXvWIKs=" crossorigin="anonymous"></head>
+  <body><script>const items=["mode","palette"];items.forEach(function(e){const t=localStorage.getItem("hbs-"+e);t&&document.body.parentElement.setAttribute("data-"+e,t)})</script><header><nav class="navbar top-app-bar top-app-bar-expand-lg fixed-top">
+  <div class="container">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <i class="fas fa-bars"></i>
+    </button><a class="navbar-brand flex-grow-1 flex-lg-grow-0 text-center text-lg-start mx-auto me-lg-3" href="/"><img class="logo" alt="Logo" src="/images/logo.webp" loading="lazy"
+   width="500" height="500"
+   />
+Dev With Vishal
+    </a>
+    <div class="offcanvas offcanvas-bottom surface" tabindex="-1" id="offcanvasSocialShare" aria-labelledby="offcanvasSocialShare">
+  <div class="offcanvas-header">
+    <h3 class="offcanvas-title">Share</h3>
+    <button type="button" class="btn btn-sm btn-outline-primary" data-bs-dismiss="offcanvas" aria-label="Close">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+  <div class="offcanvas-body">
+    <a class="btn btn-sm btn-outline-primary social-share-button" rel="noopener noreferrer" aria-label="Twitter Share Button"
+      target="_blank" href="https://twitter.com/intent/tweet?title=Liveness%20Probe%20a%20%28G%29unicorn%20tale&url=%2fposts%2fliveness-probe%2f">
+      <i class="fab fa-fw fa-twitter"></i> Twitter
+    </a>
+    <a class="btn btn-sm btn-outline-primary social-share-button" rel="noopener noreferrer" aria-label="Facebook Share Button"
+      target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=%2fposts%2fliveness-probe%2f">
+      <i class="fab fa-fw fa-facebook-f"></i> Facebook
+    </a>
+  </div>
+</div>
+    <button class="navbar-settings" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSettings"
+  aria-controls="offcanvasSettings" aria-label="Toggle settings">
+  <i class="fas fa-ellipsis-v"></i>
+</button>
+
+<div class="offcanvas offcanvas-end surface h-100" tabindex="-1" id="offcanvasSettings" aria-labelledby="offcanvasSettings">
+  <div class="offcanvas-header">
+    <h3 class="offcanvas-title">Settings</h3>
+    <button type="button" class="btn btn-sm btn-outline-primary" data-bs-dismiss="offcanvas" aria-label="Close">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+  <div class="offcanvas-body d-flex flex-column">
+
+<section class="setting">
+  <form class="row">
+    <div class="col-auto">
+      <label><i class="fas fa-fw fa-adjust"></i> Mode</label>
+    </div>
+    <div class="col-auto ms-auto">
+      <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" id="modeSwitcher">
+      </div>
+    </div>
+  </form>
+</section>
+
+<section class="setting">
+  <form class="font-size-switcher-form row">
+    <div class="col-auto">
+      <label for="fontSize" class="form-label"><i class="fas fa-fw fa-font"></i> Font Size</label>
+    </div>
+    <div class="col-auto ms-auto">
+      <input type="range" class="form-range" min="-2" max="2" id="fontSize">
+    </div>
+  </form>
+</section>
+
+
+<section class="setting palettes">
+  <form class="row">
+    <div class="col-auto">
+      <label><i class="fas fa-fw fa-palette"></i> Palette</label>
+    </div>
+    <div class="col-auto ms-auto">
+      <a id="btnPalette" class="btn btn-sm btn-outline-primary" role="button" aria-label="palettePicker">
+        <i class="fas fa-eye-dropper"></i>
+      </a>
+    </div>
+  </form>
+  <div class="mt-2 d-flex justify-content-between visually-hidden" id="palettePicker"><button type="button" id="palette-blue" aria-label="Blue"
+        class="btn btn-sm w-100 palette" data-palette="blue">
+      </button><button type="button" id="palette-blue-gray" aria-label="Blue Gray"
+        class="btn btn-sm w-100 palette" data-palette="blue-gray">
+      </button><button type="button" id="palette-brown" aria-label="Brown"
+        class="btn btn-sm w-100 palette" data-palette="brown">
+      </button><button type="button" id="palette-cyan" aria-label="Cyan"
+        class="btn btn-sm w-100 palette" data-palette="cyan">
+      </button><button type="button" id="palette-green" aria-label="Green"
+        class="btn btn-sm w-100 palette" data-palette="green">
+      </button><button type="button" id="palette-indigo" aria-label="Indigo"
+        class="btn btn-sm w-100 palette" data-palette="indigo">
+      </button><button type="button" id="palette-orange" aria-label="Orange"
+        class="btn btn-sm w-100 palette" data-palette="orange">
+      </button><button type="button" id="palette-pink" aria-label="Pink"
+        class="btn btn-sm w-100 palette" data-palette="pink">
+      </button><button type="button" id="palette-purple" aria-label="Purple"
+        class="btn btn-sm w-100 palette" data-palette="purple">
+      </button><button type="button" id="palette-red" aria-label="Red"
+        class="btn btn-sm w-100 palette" data-palette="red">
+      </button><button type="button" id="palette-teal" aria-label="Teal"
+        class="btn btn-sm w-100 palette" data-palette="teal">
+      </button><button type="button" id="palette-yellow" aria-label="Yellow"
+        class="btn btn-sm w-100 palette" data-palette="yellow">
+      </button></div>
+</section>
+<section class="setting actions d-flex justify-content-around mt-auto overflow-auto">
+  <a role="button" class="action action-go-back" href="javascript: window.history.back();">
+    <span class="action-icon"><i class="fas fa-2x fa-arrow-left"></i></span> Go back
+  </a>
+  <a role="button" class="action action-reload-page">
+    <span class="action-icon"><i class="fas fa-2x fa-redo-alt"></i></span> Reload
+  </a>
+  <a role="button" class="action action-copy-url">
+    <span class="action-icon"><i class="fas fa-2x fa-link"></i></span> Copy URL
+  </a><a class="action action-social-share" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSocialShare"
+    aria-controls="offcanvasSocialShare" aria-label="Toggle social share">
+    <span class="action-icon"><i class="fas fa-2x fa-share-alt"></i></span> Share
+  </a></section>
+
+</div>
+</div>
+
+    <div class="collapse navbar-collapse" tabindex="-1" id="navbarSupportedContent" aria-labelledby="navbarSupportedContent">
+      <form class="search-bar my-1" action="/search">
+  <div class="input-group input-group-sm">
+    <span class="btn btn-search disabled position-absolute left-0"><i class="fas fa-fw fa-search"></i></span>
+    <input class="form-control rounded-pill" name="q" type="search" aria-label="Search">
+  </div>
+</form>
+      <ul class="navbar-nav ms-auto"><li class="nav-item">
+          <a class="nav-link" href="/tags">
+            <i class='fas fa-fw fa-tags'></i>Tags
+          </a>
+        </li><li class="nav-item">
+          <a class="nav-link" href="/series">
+            <i class='fas fa-fw fa-columns'></i>Series
+          </a>
+        </li><li class="nav-item">
+          <a class="nav-link" href="/categories">
+            <i class='fas fa-fw fa-folder'></i>Categories
+          </a>
+        </li><li class="nav-item">
+          <a class="nav-link" href="/archives">
+            <i class='fas fa-fw fa-file-archive'></i>Archives
+          </a>
+        </li></ul>
+    </div>
+  </div>
+</nav>
+</header>
+<main role="main" class="container">
+      <div class="row content">
+<div class="col-lg-8">
+  <div class="container"><nav class="row card component" aria-label="breadcrumb">
+  <div class="card-body">
+    <ol class="breadcrumb "><li class="breadcrumb-item"><a href="/">Home</a></li><li class="breadcrumb-item"><a href="/posts/"></a></li><li class="breadcrumb-item active">Liveness Probe a (G)unicorn Tale</li></ol>
+  </div>
+</nav><div class="post-panel-wrapper">
+  <div class="d-flex flex-column component rounded post-panel">
+    
+    <a class="action action-panel-toggler" role="button" title="Panel toggler">
+      <i class="fas fa-fw fa-chevron-circle-down"></i>
+    </a>
+    <a id="sidebarToggler" class="action d-none d-lg-block" role="button" title="Sidebar toggler">
+  <i class="fas fa-fw fa-expand-alt" data-fa-transform="rotate-45"></i>
+</a>
+
+    
+
+    
+    
+    <a class="action" href="#post-comments" role="button" aria-label="Comments" title="Comments">
+  <i class="fas fa-fw fa-comments"></i>
+</a>
+    <a class="action" href="#postTOC" aria-controls="Table of contents" role="button" title="Table of contents">
+  <i class="fas fa-fw fa-list-alt"></i>
+</a>
+    
+  </div>
+</div>
+<article class="row card component mb-4 post">
+  <div class="card-header ">
+    <h1 class="card-title post-title">Liveness Probe a (G)unicorn Tale
+</h1>
+  </div>
+  <div class="card-body"><div class="post-meta">
+  <span class="post-date" title="created on 2023-07-07 09:06:50 &#43;0530 IST.">
+    Jul 7, 2023
+  </span><span class="post-reading-time">
+    9 min read
+  </span><span class="post-taxonomies"><a href="/tags/kubernetes/" class="badge post-taxonomy">Kubernetes</a><a href="/categories/technical/" class="badge post-taxonomy">technical</a><a href="/categories/engineering/" class="badge post-taxonomy">engineering</a><a href="/categories/technical/" class="badge post-taxonomy">technical</a><a href="/categories/engineering/" class="badge post-taxonomy">engineering</a><a href="/tags/kubernetes/" class="badge post-taxonomy">Kubernetes</a></span>
+</div>
+<div class="post-content mb-3"><p>Liveness probe is a mechanism used by orchestrator platforms, to determine which process has gone faulty and then usually attempts to restart it, how is dependent on the orchestrator.</p>
+<p>The faults are very much dependent on the process code, determining faults is dependent on both process code and the orchestration engine, handling the faults is usually left to the orchestration engine to handle it. So, it definitely sounds like a very useful feature then in the first glance for any orchestrator where a particular kind of process is running in a large number and for a very long time. But like any other feature it is easy to get it wrong and the effects can be mild to catastrophic when it can cause a complete <code>Denial of Service</code> (commonly reffered to as <code>DoS</code>). So, it&rsquo;s not a silver bullet for all the applications, and there might be some applications which <strong>should</strong> never use it.</p>
+<p>The rest of the post will talk only about k8s as the orchestration engine and the liveness probe it provides.</p>
+<h3 id="k8s-crash-course">k8s crash course<a class="anchor ms-1" href="#k8s-crash-course"><i class="fas fa-link"></i></a></h3>
+<p>The deployment unit in k8s is pods, which can compose multiple containers but usually one for the main process and the other side car containers for mutual TLS, or to decrypt some secrets. A pod has containers, each container is usually running one process. Kubernetes supports several <a href="https://kubernetes.io/docs/setup/production-environment/container-runtimes/" target="_blank" rel="noopener noreferrer">container runtimes</a>
+, with <code>Docker Engine</code> still being the most popular one. Containers require memory and CPU for the processes to run and the liveness probes can be configured for each container as well inside the pod. These health checks are responsible for keeping your application up by replacing the <strong><code>seemingly</code></strong> unresponsive pods, mark them unhealthy and cause these pods to be restarted or rescheduled.</p>
+<h3 id="health-checks">Health Checks<a class="anchor ms-1" href="#health-checks"><i class="fas fa-link"></i></a></h3>
+<p>Health checks are configured in most processes to determine whether a process is responsive or not. This property is used by the probes in k8s. As of writing this, k8s only support HTTP endpoints for the liveness and readiness probe. Though there are other protocols as well which can be supported via HTTP proxies and sidecar containers can be injected in the pod for the similar reasons.</p>
+<h3 id="when-should-you-not-use-liveness-probe">When should you not use liveness probe<a class="anchor ms-1" href="#when-should-you-not-use-liveness-probe"><i class="fas fa-link"></i></a></h3>
+<p>The other way to think of this will be when would the liveness probe be not that useful or can bear catastrophic results.</p>
+<p>Consider a single threaded process, where each thread processes one request it is getting and until that is completely processed no new process gets to be scheduled on the CPU, but it has a queue which can be used to manage multiple requests. The health check endpoint itself is very low, and returns 200 immediately. But it has to get to run on the CPU to return that. Now, let say the liveness probe is configured to hit every 10 seconds and can withstand a loss of 6 consecutive signals before the container/pod has to be deemed unhealthy, the timeout for the requests is 5 seconds let say. Now if you are just running one thread and it serves the requests as it comes, it only requires 6 requests coming at 10 seconds interval continuously each taking a second to timeout the health check endpoint and in turn to bring the pod down, with each request taking 6 seconds it just takes a request for each 10 seconds to turn the pod down.</p>
+<p>If you have 20 of them running, it really just requires 20 such requests coming in at an interval of 10 seconds in the worst case(because of the k8s service load balancing the traffic to the pods), but 20 is an abysmal number and really if you have 1k rpm which is also low, there is a high probability all the pods are going to choke down at the same time after a long enough time, and making the entire system down with no scope of recovering with the <code>high response time</code> requests coming into the system steadily.</p>
+<p>The only solution that can seem to work could be to increase the number of pods <em>manually because the HPAs aren&rsquo;t going to kick in because the pods are going down because of OOM killed etc.</em> <strong>(most of the time)</strong>, but with the kind of traffic it&rsquo;s just a matter of time before the new pods aren&rsquo;t able to live long enough either and scaling a lot of pods can have other catastrophic effects for a cluster running at capacity choking other services now. <strong><em>There is enough CPU if you just wait a little</em></strong> unlike memory where the overflow of it will crash the process while the kernel cleans it&rsquo;s used memory, but the CPU wait is sometimes also an undesirable thing and therefore this scaling up the pods can be a bad mitigation strategy for-</p>
+<ul>
+<li>the cluster running at capacity
+<ul>
+<li>doesn&rsquo;t have nodes autoscaling enabled.</li>
+<li>have nodes autoscaling enabled. autoscaling isn&rsquo;t free or rather cheap even, and it takes time to provision nodes and bring them into the cluster.</li>
+</ul>
+</li>
+</ul>
+<p>This also doesn&rsquo;t take into account the backoff if you have configured any for the pod to come up(which is usually the case) and the effects will be even worse then.</p>
+<h3 id="gunicorn-and-the-queue-up-love-story">Gunicorn and the queue up love story.<a class="anchor ms-1" href="#gunicorn-and-the-queue-up-love-story"><i class="fas fa-link"></i></a></h3>
+<p><strong>Disclaimer: I am no python or gunicorn expert, but the claims will be based on what I have managed to hookup quickly and have seen once in production for a large scale monolith. My domain is mostly compiled languages like-&gt; <code>go</code>, <code>rust</code> having the runtime embedded into the ELF executable for the OS to run.</strong></p>
+<p>Python isn&rsquo;t a single threaded language but it&rsquo;s limited in concurrent programming because of the Global Interpreter Lock or GIL when the task is CPU intensive but that will largely be the case for most languages running on a single core and not utilizing multiple cores or hyper threaded threads for example.</p>
+<p>Gunicorn is a wsgi python HTTP server for *nix. It’s a pre-fork worker model and the gunicorn process forks multiple processes at the time of startup to be able to serve requests better and not having to fork them at the time of request queuing. But it doesn&rsquo;t eliminate request queueing entirely and it&rsquo;s just n times better where n is the number of processes gunicorn forked while starting the application.</p>
+<h3 id="a-quick-example-now">A quick example now.<a class="anchor ms-1" href="#a-quick-example-now"><i class="fas fa-link"></i></a></h3>
+<p>We will create a new django project-&gt; using <code>django-admin startproject abcd</code>. We won&rsquo;t change most things in this, except -&gt;</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="ln">1</span><span class="cl">update the settings.py&#39;s INSTALLED_APPS array to include the rest_framework.
+</span></span></code></pre></div><p>and the urls.py should now look like-&gt;</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="kn">from</span> <span class="nn">django.contrib</span> <span class="kn">import</span> <span class="n">admin</span>
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl"><span class="kn">from</span> <span class="nn">django.urls</span> <span class="kn">import</span> <span class="n">path</span>
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="kn">from</span> <span class="nn">rest_framework.response</span> <span class="kn">import</span> <span class="n">Response</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl"><span class="kn">from</span> <span class="nn">rest_framework.decorators</span> <span class="kn">import</span> <span class="n">api_view</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl"><span class="kn">import</span> <span class="nn">time</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl"><span class="nd">@api_view</span><span class="p">((</span><span class="s1">&#39;GET&#39;</span><span class="p">,))</span>
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl"><span class="k">def</span> <span class="nf">status</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">    <span class="k">return</span> <span class="n">Response</span><span class="p">({</span><span class="s1">&#39;status&#39;</span><span class="p">:</span> <span class="s1">&#39;ok&#39;</span><span class="p">})</span>
+</span></span><span class="line"><span class="ln">10</span><span class="cl">
+</span></span><span class="line"><span class="ln">11</span><span class="cl"><span class="nd">@api_view</span><span class="p">((</span><span class="s1">&#39;GET&#39;</span><span class="p">,))</span>
+</span></span><span class="line"><span class="ln">12</span><span class="cl"><span class="k">def</span> <span class="nf">expensive</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+</span></span><span class="line"><span class="ln">13</span><span class="cl">    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">14</span><span class="cl">    <span class="k">return</span> <span class="n">Response</span><span class="p">({</span><span class="s1">&#39;status&#39;</span><span class="p">:</span> <span class="s1">&#39;ok&#39;</span><span class="p">})</span>
+</span></span><span class="line"><span class="ln">15</span><span class="cl">
+</span></span><span class="line"><span class="ln">16</span><span class="cl">
+</span></span><span class="line"><span class="ln">17</span><span class="cl"><span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="ln">18</span><span class="cl">    <span class="n">path</span><span class="p">(</span><span class="s1">&#39;expensive&#39;</span><span class="p">,</span><span class="n">expensive</span><span class="p">),</span>
+</span></span><span class="line"><span class="ln">19</span><span class="cl">    <span class="n">path</span><span class="p">(</span><span class="s1">&#39;status&#39;</span><span class="p">,</span><span class="n">status</span><span class="p">),</span>
+</span></span><span class="line"><span class="ln">20</span><span class="cl">    <span class="n">path</span><span class="p">(</span><span class="s1">&#39;admin/&#39;</span><span class="p">,</span> <span class="n">admin</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">urls</span><span class="p">),</span>
+</span></span><span class="line"><span class="ln">21</span><span class="cl"><span class="p">]</span>
+</span></span></code></pre></div><p>So now, we have an expensive handler and a healthcheck handler. So, now coming back to this, this healthcheck handler isn&rsquo;t very useful but is unusually common in most deployments. This is just going to respond as long as the server process is running and there are other ways to ensure the process is running for example starting the process command can be part of dockerfile as it&rsquo;s starting point, as soon as the process is down, the container goes down too, and the pods dies as well in favour of another pod to come up.</p>
+<p>Now we will start the gunicorn server with 2 processes and 2 threads via-&gt;</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="ln">1</span><span class="cl">gunicorn abcd.wsgi --name<span class="o">=</span>abcd --bind<span class="o">=</span>0.0.0.0:8000 --workers <span class="m">2</span> --threads<span class="o">=</span><span class="m">2</span>
+</span></span></code></pre></div><p><img class="img-fluid" alt="Gunicorn startup logs" src="/images/gunicorn-startup.png" loading="lazy"
+   width="504" height="91"
+   />
+
+</p>
+<p>Now we hit the expensive one 4 times before hitting the healthcheck one by-&gt;</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="ln">1</span><span class="cl"><span class="k">for</span> i in <span class="o">{</span>1..4<span class="o">}</span><span class="p">;</span> <span class="k">do</span><span class="p">;</span> curl localhost:8000/expensive <span class="p">&amp;</span> <span class="p">;</span><span class="nb">printf</span> <span class="s2">&#34;\n&#34;</span><span class="p">;</span><span class="k">done</span>
+</span></span></code></pre></div><p>then hitting the status endpoint took ~8 seconds, which confirms even if the request is idle and not doing anything on CPU or waiting on I/O the queued request won&rsquo;t get a fair share of CPU to run.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="ln">1</span><span class="cl">vishal% <span class="nb">history</span> -D <span class="p">|</span> grep -i status <span class="p">|</span> tail -n <span class="m">1</span>
+</span></span><span class="line"><span class="ln">2</span><span class="cl">   <span class="m">11</span>  0:08  curl localhost:8000/status
+</span></span></code></pre></div><p>So, even though the process is running and just some requests are slow, the k8s would think the pod is unhealthy because the endpoint is timing out. So, even though the process is just degraded and would continue to serve the traffic at it&rsquo;s capacity the healthcheck would just bring DoS.</p>
+<p>The mitigation strategy would be use something like <a href="http://www.gevent.org/" target="_blank" rel="noopener noreferrer">gevent</a>
+ worker class which can create low overhead light weight subroutines which can co-operatively be pre-empted when that subroutine goes into an I/O wait etc. Obviously this will be useful when the application is I/O intensive instead of CPU bound which is most often the case when choosing gunicorn to host the server otherwise there are definitely better alternatives and languages to do CPU bound work.</p>
+<p>So, now we will launch our gunicorn server again with the gevent class and attack on it with <a href="https://github.com/tsenart/vegeta" target="_blank" rel="noopener noreferrer">vegeta</a>
+.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="ln">1</span><span class="cl">gunicorn abcd.wsgi --name<span class="o">=</span>abcd --bind<span class="o">=</span>0.0.0.0:8000 --workers <span class="m">2</span> --worker-class<span class="o">=</span>gevent --worker-connections<span class="o">=</span><span class="m">2000</span>
+</span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="o">[</span>2023-07-09 13:32:33 +0530<span class="o">]</span> <span class="o">[</span>5192<span class="o">]</span> <span class="o">[</span>INFO<span class="o">]</span> Starting gunicorn 20.1.0
+</span></span><span class="line"><span class="ln">3</span><span class="cl"><span class="o">[</span>2023-07-09 13:32:33 +0530<span class="o">]</span> <span class="o">[</span>5192<span class="o">]</span> <span class="o">[</span>INFO<span class="o">]</span> Listening at: http://0.0.0.0:8000 <span class="o">(</span>5192<span class="o">)</span>
+</span></span><span class="line"><span class="ln">4</span><span class="cl"><span class="o">[</span>2023-07-09 13:32:33 +0530<span class="o">]</span> <span class="o">[</span>5192<span class="o">]</span> <span class="o">[</span>INFO<span class="o">]</span> Using worker: gevent
+</span></span><span class="line"><span class="ln">5</span><span class="cl"><span class="o">[</span>2023-07-09 13:32:33 +0530<span class="o">]</span> <span class="o">[</span>5193<span class="o">]</span> <span class="o">[</span>INFO<span class="o">]</span> Booting worker with pid: <span class="m">5193</span>
+</span></span><span class="line"><span class="ln">6</span><span class="cl"><span class="o">[</span>2023-07-09 13:32:33 +0530<span class="o">]</span> <span class="o">[</span>5194<span class="o">]</span> <span class="o">[</span>INFO<span class="o">]</span> Booting worker with pid: <span class="m">5194</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="ln">1</span><span class="cl">./vegeta attack -rate <span class="m">330</span> -duration 6s localhost:8000/expensive
+</span></span></code></pre></div><p>Hitting at the rate of 330/sec for 6 seconds, and in another shell <code>curl localhost:8000/status</code> now returns immediately.</p>
+<p>With this, obviously there was no cpu/memory spike noticed because the expensive endpoint itself is just expensive in terms of time and not in terms of CPU or memory. So, obviously <code>htop -p $(pgrep gunicorn | paste -s -d, -)</code> didn&rsquo;t show anything, if your application is doing disk writes and flushes, please monitor <code>iostat -x1</code> or similar metric exposing tools.</p>
+<h3 id="liveness-probe--synthetic-monitoring">Liveness probe-> Synthetic Monitoring<a class="anchor ms-1" href="#liveness-probe--synthetic-monitoring"><i class="fas fa-link"></i></a></h3>
+<p>Now about the liveness probe-&gt; You might better off not using it in some places unless you are using it with caution. You can still have datadog monitors or setup New Relic synthetic monitoring which can tell you when it&rsquo;s missing some heartbeats, the whole point of this simple status endpoint is to be able to tell you something&rsquo;s wrong, not to make anything wrong. It can make things wrong to worse to DoS very quickly. So, let your observability tell you something&rsquo;s wrong and you can take action which might include introducing a new Firewall rule for example, bringing the pod down will rarely be beneficial in this case unless it goes down because of the entrypoint process going down itself.</p>
+</div></div>
+  <div class="card-footer"><div class="post-navs d-flex justify-content-evenly">
+  <div class="post-nav post-prev"><i class="fas fa-fw fa-chevron-left"></i>
+    <a href="/posts/productivity/">Productivity
+</a>
+  </div></div></div>
+</article><div class="card component row post-comments" id="post-comments">
+  <div class="card-header">
+    <h2 class="card-title">Comments</h2>
+  </div>
+  <div class="card-body"><script src="https://utteranc.es/client.js"
+  repo="vishal1132/vishal1132.github.io"
+  issue-term="pathname"
+  label="comment"
+  theme="github-light"
+  crossorigin="anonymous"
+  async>
+</script></div>
+</div></div>
+</div><aside class="col-lg-4 sidebar d-flex">
+  <div class="container d-flex flex-column">
+    
+    <section class="card row text-center profile component">
+  <div class="card-body">
+    <div class="col-12 d-flex align-items-center justify-content-center"><img class="profile-avatar rounded-circle" alt="Vishal Sharma" src="/images/profile.webp" loading="lazy"
+   width="425" height="359"
+   />
+</div>
+    <div class="col-12 profile-meta"><div class="profile-name">Vishal Sharma</div><div class="profile-bio">Computer Science Engineer</div><div class="profile-location"><i class="fas fa-fw fa-map-marker-alt"></i>New Delhi, India</div><div class="profile-about"><i class="fas fa-fw fa-user"></i><a href="/about/">About</a></div><nav class="social-links nav justify-content-center"><a class="nav-link social-link" href="mailto:vishal.sharma09890@gmail.com" title="Email">
+      <i class="fas fa-fw fa-2x fa-envelope"></i>
+    </a><a class="nav-link social-link" target="_blank" href="https://github.com/vishal1132" title="GitHub" rel="noopener noreferrer">
+        <i class="fa-fw fa-2x fab fa-github"></i>
+      </a><a class="nav-link social-link" target="_blank" href="https://twitter.com/vishalssh" title="Twitter" rel="noopener noreferrer">
+        <i class="fa-fw fa-2x fab fa-twitter"></i>
+      </a></nav>
+</div>
+  </div>
+</section>
+  <div class="post-toc row mb-4 card component" id="postTOC">
+  <div class="card-header">
+    <h2 class="card-title">Contents</h2>
+  </div>
+  <div class="card-body">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#k8s-crash-course">k8s crash course</a></li>
+        <li><a href="#health-checks">Health Checks</a></li>
+        <li><a href="#when-should-you-not-use-liveness-probe">When should you not use liveness probe</a></li>
+        <li><a href="#gunicorn-and-the-queue-up-love-story">Gunicorn and the queue up love story.</a></li>
+        <li><a href="#a-quick-example-now">A quick example now.</a></li>
+        <li><a href="#liveness-probe--synthetic-monitoring">Liveness probe-&gt; Synthetic Monitoring</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div><section class="featured-posts row card component">
+    <div class="card-header">
+      <h2 class="card-title">Featured Posts</h2>
+    </div>
+    <div class="card-body">
+      <ul class="post-list"><li>
+          <a href="/posts/liveness-probe/">Liveness Probe a (G)unicorn Tale
+</a>
+        </li><li>
+          <a href="/posts/productivity/">Productivity
+</a>
+        </li><li>
+          <a href="/posts/distributed-counter/">Distributed Counter
+</a>
+        </li></ul>
+    </div>
+  </section><section class="recent-posts row card component">
+  <div class="card-header">
+    <h2 class="card-title">Recent Posts</h2>
+  </div>
+  <div class="card-body">
+    <ul class="post-list"><li>
+        <a href="/posts/liveness-probe/">Liveness Probe a (G)unicorn Tale
+</a>
+      </li><li>
+        <a href="/posts/productivity/">Productivity
+</a>
+      </li><li>
+        <a href="/posts/distributed-counter/">Distributed Counter
+</a>
+      </li></ul>
+  </div>
+</section><section class="series-taxonomies row card component">
+      <div class="card-header">
+        <h2 class="card-title">
+          <a href="/series">Series</a>
+        </h2>
+      </div>
+      <div class="card-body">
+        <div class="py-2"><a href="/series/distributed-systems/" class="badge rounded post-taxonomy" title="Distributed Systems">
+            Distributed Systems<span class="badge badge-sm text-white bg-accent ms-1">1</span></a><a href="/series/personal-productivity/" class="badge rounded post-taxonomy" title="Personal Productivity">
+            Personal Productivity<span class="badge badge-sm text-white bg-accent ms-1">1</span></a></div>
+      </div>
+    </section><section class="categories-taxonomies row card component">
+      <div class="card-header">
+        <h2 class="card-title">
+          <a href="/categories">Categories</a>
+        </h2>
+      </div>
+      <div class="card-body">
+        <div class="py-2"><a href="/categories/engineering/" class="badge rounded post-taxonomy" title="engineering">
+            engineering<span class="badge badge-sm text-white bg-accent ms-1">2</span></a><a href="/categories/technical/" class="badge rounded post-taxonomy" title="technical">
+            technical<span class="badge badge-sm text-white bg-accent ms-1">2</span></a><a href="/categories/productivity/" class="badge rounded post-taxonomy" title="Productivity">
+            Productivity<span class="badge badge-sm text-white bg-accent ms-1">1</span></a></div>
+      </div>
+    </section><section class="tags-taxonomies row card component">
+      <div class="card-header">
+        <h2 class="card-title">
+          <a href="/tags">Tags</a>
+        </h2>
+      </div>
+      <div class="card-body">
+        <div class="py-2"><a href="/tags/crdts/" class="badge rounded post-taxonomy" title="CRDTs">
+            CRDTs<span class="badge badge-sm text-white bg-accent ms-1">1</span></a><a href="/tags/kubernetes/" class="badge rounded post-taxonomy" title="Kubernetes">
+            Kubernetes<span class="badge badge-sm text-white bg-accent ms-1">1</span></a><a href="/tags/leadership/" class="badge rounded post-taxonomy" title="Leadership">
+            Leadership<span class="badge badge-sm text-white bg-accent ms-1">1</span></a><a href="/tags/productivity/" class="badge rounded post-taxonomy" title="productivity">
+            productivity<span class="badge badge-sm text-white bg-accent ms-1">1</span></a></div>
+      </div>
+    </section>
+    
+  </div>
+</aside>
+</div>
+    </main><footer class="footer mt-auto py-3 text-center container"><nav class="social-links nav justify-content-center mb-2"><a class="nav-link social-link" href="mailto:vishal.sharma09890@gmail.com" title="Email">
+      <i class="fas fa-fw fa-2x fa-envelope"></i>
+    </a><a class="nav-link social-link" target="_blank" href="https://github.com/vishal1132" title="GitHub" rel="noopener noreferrer">
+        <i class="fa-fw fa-2x fab fa-github"></i>
+      </a><a class="nav-link social-link" target="_blank" href="https://linkedin.com/vishalssh" title="LinkedIn" rel="noopener noreferrer">
+        <i class="fa-fw fa-2x fab fa-linkedin-in"></i>
+      </a><a class="nav-link social-link" target="_blank" href="https://stackoverflow.com/users/11974515" title="Stack Overflow" rel="noopener noreferrer">
+        <i class="fa-fw fa-2x fab fa-stack-overflow"></i>
+      </a><a class="nav-link social-link" target="_blank" href="https://twitter.com/vishalssh" title="Twitter" rel="noopener noreferrer">
+        <i class="fa-fw fa-2x fab fa-twitter"></i>
+      </a></nav>
+
+
+
+</footer>
+<script src="/js/main.a365cf8aadc379e3f52dd2b8d8b87c7bcd3185f783e8e71dd96dc67f52bf1e67.js" integrity="sha256-o2XPiq3DeeP1LdK42Lh8e80xhfeD6Ocd2W3Gf1K/Hmc=" crossorigin="anonymous" defer></script><script src="/js/icons.min.fb1b77be9bd37807602ec542d150423ad89114834c2e76ca7c004309310d64b0.js" integrity="sha256-&#43;xt3vpvTeAdgLsVC0VBCOtiRFINMLnbKfABDCTENZLA=" crossorigin="anonymous" defer></script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('\/service-worker.js').then(function(reg) {
+      console.log('Successfully registered service worker', reg);
+    }).catch(function(err) {
+      console.warn('Error whilst registering service worker', err);
+    });
+  });
+}
+</script><script src="/js/viewer.min.4f0b78319199ad080a1331f64e868866ccf303199b8144d80003d6ba8a4e5feb.js" integrity="sha256-Twt4MZGZrQgKEzH2ToaIZszzAxmbgUTYAAPWuopOX&#43;s=" crossorigin="anonymous" defer></script><script defer src="/js/mermaid.min.9ac08004ff48494356843c64dc5f1ccb6f327d8e6551947298da016ba4c550ab.js" integrity="sha256-msCABP9ISUNWhDxk3F8cy28yfY5lUZRymNoBa6TFUKs=" crossorigin="anonymous"></script>
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'G-K36P0BL3FK', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+</body>
+</html>
